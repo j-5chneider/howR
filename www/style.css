@@ -1,0 +1,186 @@
+slides > slide:not(.nobackground):after {
+  content: '';
+}
+
+.title-slide {
+  background-image: url("title_bg.jpg");
+  background-size: cover;
+}
+
+slides > slide.title-slide hgroup h1 {
+  color: white;
+  text-shadow: 2px 2px 1px rgba(0,0,0, 0.5);
+}
+
+
+slides > slide.title-slide hgroup p {
+  color: white;
+}
+
+
+/* logo title slide */
+.plogo {
+  height: 40px;
+  float: left;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.gdbar img {
+  width: 200px !important;
+  height: 51px !important;
+  margin: 8px 8px;
+}
+
+.gdbar {
+  width: 330px !important;
+  height: 67px !important;
+}
+
+/* footer logo */
+slides > slide:not(.nobackground):before {
+  width: 0;
+  height: 0;
+  background-size: 0 0;
+}
+
+/* footer link to slides */
+.myfooter {
+  height: 0;
+  position: absolute;
+  bottom: 5%;
+  width: 85%;
+  text-align: center;
+  font-size: 0.7em;
+}
+
+a:link {
+    color: grey;
+    border-bottom: 1px solid grey;
+}
+
+a:visited {
+    color: grey;
+    border-bottom: 1px solid grey;
+}
+
+a:hover {
+    color: grey;
+    border-bottom: 1px solid grey;
+}
+
+a:active {
+    color: grey;
+    border-bottom: 1px solid grey;
+}
+
+
+/* references on slides */
+.mysource {
+  float: right;
+  opacity: .6;
+  font-size: .7em;
+}
+
+/*
+.fullscreen {
+  background-image: url("modelle_tab.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center; 
+}
+*/
+
+
+/* divs for slide design */
+.container {
+    justify-content: center;
+    display: flex;
+}
+
+.box30 {
+    margin: 20px;
+    width: 30%;
+    text-align: center;
+}
+
+.box60 {
+    margin: 20px;
+    width: 60%;
+    text-align: center;
+}
+
+.box45l {
+  width: 45%;
+  margin-right: 20px;
+}
+
+.box45r {
+  width: 45%;
+  margin-left: 53%;
+}
+
+
+.box45r4 {
+  position: absolute;
+  left: 50%;
+  top:0;
+  width: 50%;
+  height: 100%;
+  background-color: #a51e37;
+  z-index: -1;
+  opacity:.5;
+  text-align: center;
+  font-weight: 900;
+  color: white;
+}
+
+.box45r5 {
+  position: absolute;
+  left: 50%;
+  top:0;
+  width: 50%;
+  height: 100%;
+  background-color: #b4a069;
+  z-index: -1;
+  opacity:.5;
+  text-align: center;
+  font-weight: 900;
+  color: white;
+}
+
+.box45r6 {
+  position: absolute;
+  left: 0;
+  top:0;
+  width: 35%;
+  height: 100%;
+  background-color: #0069AA;
+  z-index: -1;
+  opacity:.5;
+  text-align: center;
+  font-weight: 900;
+  color: white;
+}
+
+.nullfuenfem {
+  font-size: .3em;
+}
+
+.myref > p {
+  font-size: 10px;
+}
+
+
+/*
+slides > slide.backdrop {
+  background: white;
+}
+*/
+
+
+.blueborder {
+   background-color: #82b9a0;
+   padding:4px;
+   display: inline-block;
+}
