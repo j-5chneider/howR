@@ -1,0 +1,535 @@
+---
+title: "wrangle, <br />check & <br />plot data"  
+subtitle: ""
+author: 
+  - Jürgen Schneider
+date: "29. Oct 2020"
+output:
+  ioslides_presentation:
+    widescreen: true
+    smaller: true
+    logo: ../www/logo.gif
+    css:  ../www/style2.css
+    highlight: pygments
+editor_options: 
+  chunk_output_type: console
+---
+
+<style>
+slides > slide:not(.nobackground):after {
+  content: '';
+}
+</style>
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      message=FALSE, 
+                      warning=FALSE)
+# download.file("https://drive.google.com/uc?export=download&id=1wuMqL_Z8T9rxuGvn0VP6siag90kHDm2O", 
+#               "../www/references.bib", overwrite = T)
+library(fontawesome)
+library(tidyverse)
+library(kableExtra)
+library(ggridges)
+```
+
+## Bevor es losgeht
+
+* Git installiert?
+* Account bei Github?
+
+
+## Agenda
+
+1. Git & Github
+2. Piping
+3. Transform Data
+4. Check Data
+5. Plot Data
+
+# `r fa(name = "git-alt", fill = "#e6e6e6")` Git & <br />`r fa(name = "github", fill = "#e6e6e6")` Github 
+
+## `r fa(name = "git-alt")` Git
+
+* Versionskontrolle von Dateien
+* lokale Installation
+* de facto Standard
+* Kompatibel zu webhoster wie `r fa(name = "github")` Github, `r fa(name = "gitlab")` Gitlab, ...
+
+## `r fa(name = "github")` Github
+
+* hostet Dateien und Versionierung
+* je Projekt wird ein "repository" angelegt (1 GB)
+* Code, Daten, ... als komplettes Projekt teilbar
+
+## Connect: RStudio-Git-Github | Einmalig (!) je Gerät
+<br />
+`r fa(name = "route")` Anleitung siehe z.B. [dieser Blogpost](https://www.datasurg.net/2015/07/13/rstudio-and-github/).  
+
+1. **In R**  
+    1. Menü "Tools" __>__ "Global Options" __>__ "Git/SVN" __>__ "Create RSA Key"
+    2. Button "View public key" `r fa(name = "long-arrow-alt-left")` kopieren
+2. **Auf github.com**
+    1. (rechts oben) auf Profilbild __>__ "Settings" __>__ "SSH and GPG Keys"
+    2. Button "New SSH Key"
+    3. public key in Feld "Key" einfügen, Title "RStudio lokale Installation"
+3. **In R** in Terminal (nicht Konsole) eingeben:
+
+```{bash, echo = T, eval = F}
+git config --global user.email "meine-email@host.de"
+git config --global user.name "dein-github-name"
+```
+
+
+## Versionierungsfähiges Projekt | anlegen
+
+1. **Auf github.com**
+    1. neues repository anlegen
+    2. im repository: Button "Code" __>__ https-Adresse kopieren
+2. **In R**
+    1. Menü "File" __>__ "New Project" __>__ "Version Control" __>__ "Git"
+    2. https-Adresse in "Repository URL" einfügen
+    3. Loslegen wie der Wirbelwind
+
+## Versionierungsfähiges Projekt | pull, commit, push
+
+Empfohlener workflow:
+
+1. "pull" nach jedem Start von RStudio
+2. "commit" mit aussagekräftigen "commit messages"<br />`r fa(name = "long-arrow-alt-right")` unterschiedliche messages für Dateien(gruppen) möglich
+3. "push" am Ende einer längeren Bearbeitung (z.B. Tagesende)
+
+
+# Piping: %>%
+
+## Piping | das Problem
+
+__Verknüpfung von Funktionen__  
+\
+
+Einzelne Schritte
+
+```{r, echo=T, eval=F}
+mydata <- import("https://shiny.jschn.org/www/fueleconomy.csv")  # import aus {rio}
+mean(mydata$hwy)
+```
+
+Verschachtelt
+```{r, echo=T, eval=F}
+mean(import("https://shiny.jschn.org/www/fueleconomy.csv")$hwy)
+```
+
+## Piping | eine Lösung
+
+__Verknüpfung von Funktionen__  
+\
+
+Einzelne Schritte
+
+```{r, echo=T, eval=F}
+mydata <- import("https://shiny.jschn.org/www/fueleconomy.csv")  # import aus {rio}
+mean(mydata$hwy)
+```
+
+Verschachtelt
+```{r, echo=T, eval=F}
+mean(import("https://shiny.jschn.org/www/fueleconomy.csv")$hwy)
+```
+
+
+Piping
+```{r, echo=T, eval=F}
+import("https://shiny.jschn.org/www/fueleconomy.csv") %>%
+  summarize(mean_hwy = mean(hwy))
+```
+
+# Transform Data
+
+## Transform Data | summarize( ) & mutate( )
+
+```{r, echo=T, eval=F}
+mydata <- mydata %>%
+  mutate(newVariable_mean1 = (oldVariable1 + oldVariable2)/2,                  # new variable: MW selbst berechnen
+         newVariable_mean2 = rowMeans(data.frame(oldVariable1, oldVariable2),  # new variable: MW automatisch
+                                      na.rm=TRUE),                             #         Fehlenden Werte entfernen
+         newVariable_sum = oldVariable1 + oldVariable2                         # new variable: Summe
+         ) %>%
+  summarize(mean_of_mean = mean(newVariable_mean1),                            # MW über Spalte newVariable_mean
+            sd_of_mean   = sd(newVariable_mean1))                              # SD über Spalte newVariable_mean
+```
+
+
+## Transform Data | combine tables: bind_cols( ) oder left_join( )
+
+Angenommen wir haben zwei Datensätze derselben Personen (z.B. zu unterschiedlichen Zeiptunkten erhoben)
+
+<div class="container">
+<div style="width:46%; margin-right:4%">
+```{r, echo=T, eval=T}
+data1 <- data.frame(id = c(1, 2, 3, 4), 
+                    var1 = c(3, 6, 2, 5))
+data1
+```
+</div>
+
+<div style="width:51%">
+
+</div>
+</div>
+
+
+## Transform Data | combine tables: bind_cols( ) oder left_join( )
+
+Angenommen wir haben zwei Datensätze derselben Personen (z.B. zu unterschiedlichen Zeiptunkten erhoben)
+
+<div class="container">
+<div style="width:46%; margin-right:4%">
+```{r, echo=T, eval=T}
+data1 <- data.frame(id = c(1, 2, 3, 4), 
+                    var1 = c(3, 6, 2, 5))
+data1
+```
+</div>
+
+<div style="width:51%">
+```{r, echo=T, eval=T}
+data2 <- data.frame(id = c(2,1,3,4), 
+                    var2 = c("B","A","C","D"))
+data2
+```
+</div>
+</div>
+
+
+## Transform Data | combine tables: bind_cols( ) oder left_join( )
+
+Angenommen wir haben zwei Datensätze derselben Personen (z.B. zu unterschiedlichen Zeiptunkten erhoben)
+
+<div class="container">
+<div style="width:46%; margin-right:4%">
+```{r, echo=T, eval=T}
+data1 <- data.frame(id = c(1, 2, 3, 4), 
+                    var1 = c(3, 6, 2, 5))
+data1
+```
+</div>
+
+<div style="width:51%">
+```{r, echo=T, eval=T}
+data2 <- data.frame(id = c(2,1,3,4), 
+                    var2 = c("B","A","C","D"))
+data2
+```
+</div>
+</div>
+
+<div class="container">
+<div style="width:46%; margin-right:4%">
+```{r, echo=T, eval=T}
+bind_cols(data1, data2)
+```
+</div>
+
+<div style="width:51%">
+
+</div>
+</div>
+
+## Transform Data | combine tables: bind_cols( ) oder left_join( )
+
+Angenommen wir haben zwei Datensätze derselben Personen (z.B. zu unterschiedlichen Zeiptunkten erhoben)
+
+<div class="container">
+<div style="width:46%; margin-right:4%">
+```{r, echo=T, eval=T}
+data1 <- data.frame(id = c(1, 2, 3, 4), 
+                    var1 = c(3, 6, 2, 5))
+data1
+```
+</div>
+
+<div style="width:51%">
+```{r, echo=T, eval=T}
+data2 <- data.frame(id = c(2,1,3,4), 
+                    var2 = c("B","A","C","D"))
+data2
+```
+</div>
+</div>
+
+<div class="container">
+<div style="width:46%; margin-right:4%">
+```{r, echo=T, eval=T}
+bind_cols(data1, data2)
+```
+</div>
+
+<div style="width:51%">
+```{r, echo=T, eval=T}
+left_join(data1, data2, by="id")
+```
+</div>
+</div>
+
+## Transform Data | gruppenspezifische Werte
+
+__Aufgabe 1 (bitte piping verwenden):__  
+
+1. Erstellt eine neue Variable, die den Benzinverbrauch der Autos über Highway und Stadt mittelt
+2. Berechnet _je Hersteller_ hier den mittleren Verbrauch<br />`r fa(name = "long-arrow-alt-right")` hierzu müsst ihr vor `summarize()` eine Gruppierung anhand `group_by()` vornehmen
+3. Speichert dieses Ergebnis in einem neuen Objekt
+
+<div class="question">
+<br />
+`r fa(name = "question-circle")` Was bilden die Werte des neuen Objekts ab?  
+</div>
+
+<br /><br /><br />
+`r fa(name = "route")`Cheatsheet [data-transformation](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf)
+
+## Transform Data | gruppenspezifische Werte
+
+__Aufgabe 2:__  
+
+1. Fügt das neue Objekt an den "alten" Datensatz anhand von `join_left()` an
+2. Werft einen Blick in die nun gejointen Daten
+
+<div class="question">
+<br />
+`r fa(name = "question-circle")` Wie wurde das Objekt aus Aufgabe 1 angefügt?  
+<br />
+`r fa(name = "question-circle")` Wozu bzw. warum könnte das Vorgehen aus Aufgabe 1 und 2 auch mit Daten aus Unterrichtsforschung verwendet werden?
+</div>
+\
+
+__Aufgabe 3:__  
+_Commit_ und _Push_ auf Github.
+
+## Transform Data | left_join( ), right_join( ), full_join( ), inner_join( )
+
+Untersuche anhand dieser beiden Minimalbeispiel-Datensätze, zu welchen unterschiedlichen Ergebnissen die Funktionen `left_join()`, `right_join()`, `full_join()`, `inner_join()` kommen
+
+```{r, echo=T, eval=F}
+minidata1 <- data.frame(name = c("Aiyse", "Berta", "Carolin"),
+                        punkte = c(22, 32, 12))
+
+minidata2 <- data.frame(name = c("Aiyse", "Berta", "Doris"),
+                        lernzeit = c(2, 12, 6))
+```
+
+(einfach den obigen code herauskopieren)
+
+## Transform Data | pivot_longer( ), pivot_wider( )
+
+<div class="container">
+<div class="box45l">
+wide datensatz
+```{r}
+data.frame(person_id = 1:5, measure_T1 = c(2,4,1,2,5), measure_T2 = c(4,6,4,3,6)) %>%
+  kbl() %>%
+  kable_paper("hover", full_width = F)
+```
+</div>
+<div class="box45l">
+long datensatz
+```{r}
+data.frame(person_id = c(1,1,2,2,3,3), pre_post = c("pre", "post", "pre", "post", "pre", "post"), measure = c(2,4,4,6,1,4)) %>%
+  kbl() %>%
+  kable_paper("hover", full_width = F)
+```
+</div>
+</div>
+
+
+## Transform Data | pivot_longer( ), pivot_wider( )
+
+
+```{r, echo=F, eval=T}
+wide_df <- data.frame(person_id = 1:5, measure_T1 = c(2,4,1,2,5), measure_T2 = c(4,6,4,3,6))
+```
+
+```{r, echo=T, eval=T}
+long_df <- wide_df %>%                              # speichere alles folgende in einem neuen Objekt
+  pivot_longer(cols = 2:3,                          # welche Variablen sollen transformiert werden?
+               names_to = "pre_post",               # Variablennamen kommen in die Spalte mit dem Namen...
+               values_to = "measure") %>%           # Werte kommen in die Spalte mit dem Namen...
+  mutate(pre_post = ifelse(pre_post == "measure_T1", "pre", "post")) # umcodierung der Variable pre_post
+
+long_df
+```
+
+## Transform Data | pivot_longer( ), pivot_wider( )
+
+
+```{r, echo=T, eval=T}
+wide_df <- long_df %>%
+  mutate(pre_post = ifelse(pre_post == "pre", "measure_T1", "measure_T2")) %>% # umcodierung variable
+  pivot_wider(id_cols = person_id,                      # welche Spalte (ID) identifiziert die Zeilen
+              names_from = "pre_post",           # nehme die späteren Variablennamen aus der Spalte...
+              values_from = "measure")           # nehme die Werte aus der Spalte...
+
+wide_df
+```
+
+
+# Check Data
+
+## Check Data | missing data
+
+```{r , echo=T}
+glimpse(airquality)
+```
+
+
+## Check Data | missing data
+
+```{r , echo=T, fig.height=4}
+library(naniar)
+vis_miss(airquality)
+```
+
+## Check Data | missing data
+
+```{r , echo=T, fig.height=4}
+gg_miss_upset(airquality)
+```
+
+## Check Data | missing data
+
+```{r , echo=T, fig.height=4, fig.width=4}
+ggplot(airquality, aes(x = Solar.R, y = Ozone)) + 
+  geom_miss_point()
+```
+
+
+# Plot Data
+
+## Plot Data | {ggplot2} 
+
+* extrem beliebtes Paket für Grafiken
+* Teil der `library(tidyverse)`
+* benötigt 3 Informationen
+  - data
+  - mapping `aes()`
+  - geoms
+* Layer-Aufbau mit `+` verknüpfen
+
+## Plot Data | {ggplot2} 
+
+```{r, echo=T, fig.height=4}
+ggplot(data = iris)
+```
+
+## Plot Data | {ggplot2} 
+
+```{r, echo=T, fig.height=4}
+ggplot(data = iris, mapping = aes(x=Petal.Length, fill=Species))
+```
+
+## Plot Data | {ggplot2} 
+
+```{r, echo=T, fig.height=4}
+ggplot(data = iris, mapping = aes(x=Petal.Length, fill=Species)) +
+  geom_density()
+```
+
+## Plot Data | {ggplot2} 
+
+```{r, echo=T, fig.height=4}
+ggplot(data = iris, mapping = aes(x=Petal.Length, fill=Species)) +
+  geom_density(alpha = .6)
+```
+
+## Plot Data | {ggplot2} 
+
+```{r, echo=T, fig.height=4}
+ggplot(data = iris, mapping = aes(x=Petal.Length, fill=Species)) +
+  geom_density(alpha = .6) +
+  theme_light()
+```
+
+## Plot Data | {ggplot2} 
+
+__eigene Exploration__  
+
+Datensätze: 
+
+* `?mpg`
+* `?iris`
+* `?sleep`
+* `?mtcars`
+* `?airquality`
+
+[gutes Cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf)
+
+<div class="question">
+
+* Probiert unterschiedliche Darstellungen aus, keine falsche Scheu
+* Code speichern, Plots im Plenum vorstellen
+
+</div>
+
+## Plot Data | unkreativ?
+
+Zusätzliche geoms in Paket __{ggridges}__  
+  
+data: airquality  
+```{r, fig.height=4}
+ggplot(airquality, aes(x=Temp, y=Month, group=Month, fill=as.factor(Month))) +
+  geom_density_ridges(alpha=.7) +
+  scale_y_continuous(limits = c(5,10.5), 
+                     breaks = c(5,6,7,8,9), 
+                     labels = c("Mai", "Juni", "Juli", "Aug", "Sept")) +
+  theme_minimal()
+```
+
+## Plot Data | unkreativ?
+
+data: iris  
+Zusätzliche Transformation vor Plotting: Größe der Punkte basiert auf Mittelwert der Petal.Width und Sepal.Width  
+```{r, fig.height=4}
+mydata <- iris %>%
+  mutate(mean_width = rowMeans(data.frame(Petal.Width, Sepal.Width)))
+
+ggplot(mydata, aes(x=Petal.Length, y=Sepal.Length, color=Species, size=mean_width)) +
+  geom_point(alpha=.5) +
+  theme_linedraw()
+```
+
+
+## Plot Data | unkreativ?
+
+data: sleep  
+```{r, fig.height=4}
+ggplot(sleep, aes(x=ID, y=extra, label=extra)) + 
+  geom_bar(stat='identity', aes(fill=group), width=.7, position = "dodge") +
+  theme_test()
+```
+
+
+## Plot Data | unkreativ?
+
+data: beaver1  
+```{r, fig.height=4}
+ggplot(beaver1, aes(x=time, y=temp, color=temp)) + 
+  geom_point() +
+  geom_line() +
+  annotate(geom="text", x=1700, y=37.3, label="Körpertemperatur\ndes Bibers",
+           color="navy") +
+  annotate(geom="text", x=2000, y=36.43, label="menschliche\nKörpertemperatur",
+           color="red") +
+  geom_hline(yintercept = 36.5, color = "red") +
+  theme_test()
+```
+
+
+# &nbsp;
+__Images:__  
+(in order of appearance)  
+  
+<span style="font-size:.7em;">
+<span>Photo by <a href="https://unsplash.com/@charlesdeluvio?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Charles Deluvio</a> on <a href="https://unsplash.com/s/photos/data-plot?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>  
+
+
+</span>
