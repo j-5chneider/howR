@@ -45,6 +45,12 @@ library(countdown)
 * RStudio starten 
 * Aufnahme ok?
 
+## Empfehlung
+
+["R for Data Science"](https://r4ds.had.co.nz/)
+
+<iframe src="https://r4ds.had.co.nz/" style="width: 100%; height: 500px;"></iframe>
+
 ## Agenda
 
 1. Why R?
