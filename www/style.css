@@ -3,7 +3,7 @@ slides > slide:not(.nobackground):after {
 }
 
 .title-slide {
-  background-image: url("title_bg.jpg");
+  background-image: url("title_bg1.jpg");
   background-size: cover;
 }
 
@@ -16,6 +16,22 @@ slides > slide.title-slide hgroup h1 {
 slides > slide.title-slide hgroup p {
   color: white;
 }
+
+
+code {
+  color: white;
+  background-color: darkgrey;
+  padding-left: 3pt;
+  padding-right: 3pt;
+}
+
+.question {
+  background-color: #fdc2bb;
+  color: #2D373C;
+  border-left: 6px solid #f94f3c;
+  padding: 5px 0 5px 10px;
+}
+
 
 
 /* logo title slide */
@@ -35,6 +51,7 @@ slides > slide.title-slide hgroup p {
 .gdbar {
   width: 330px !important;
   height: 67px !important;
+  background: #fff !important;
 }
 
 /* footer logo */
@@ -82,14 +99,33 @@ a:active {
   font-size: .7em;
 }
 
-/*
-.fullscreen {
-  background-image: url("modelle_tab.png");
+
+.fullscreenac {
+  position: absolute;
+  left: 0;
+  top:0;
+  width: 100%;
+  height: 100%;
+  background-image: url("access.gif");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center; 
+  z-index: 2;
 }
-*/
+
+
+.popular {
+  position: absolute;
+  left: 40%;
+  top:0;
+  width: 60%;
+  height: 100%;
+  background-image: url("indeed.jpg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center; 
+  z-index: -1;
+}
 
 
 /* divs for slide design */
@@ -183,4 +219,34 @@ slides > slide.backdrop {
    background-color: #82b9a0;
    padding:4px;
    display: inline-block;
+}
+
+
+
+/* CODE HIGHLIGHT */
+/* a comment */
+.prettyprint .com {
+  color: #BF1932;
+  font-style: italic;
+}
+
+
+/* a literal value */
+.prettyprint .lit {
+  color: orange;
+}
+ 
+
+/* parenthesis, commas, ... */
+.prettyprint .pun,
+.prettyprint .opn,
+.prettyprint .clo {
+  color: #4169e1;
+  font-weight:bold;
+}
+
+
+/* regular text */
+.prettyprint .pln {
+  color: #293133;
 }
