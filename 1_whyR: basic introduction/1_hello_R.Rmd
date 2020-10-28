@@ -41,7 +41,7 @@ library(countdown)
 
 ## Bevor es losgeht
 
-* Folien herunterladen: 
+* Folien herunterladen: [**bit.ly/howR2020**](http://bit.ly/howR2020) <br />`r fa(name = "folder")` *Ordner "1_whyR: basic introduction"*<br /> `r fa(name = "long-arrow-alt-right")` *Datei "1_hello_R.html"*
 * RStudio starten 
 
 ## Agenda
