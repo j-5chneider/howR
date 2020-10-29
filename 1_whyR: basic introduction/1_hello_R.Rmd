@@ -11,9 +11,6 @@ output:
     logo: ../www/logo.gif
     css:  ../www/style.css
     highlight: pygments
-#header-includes:
-#  - \includegraphics{![](../www/rlogo.png)}
-# bibliography: ../www/references.bib
 editor_options: 
   chunk_output_type: console
 ---
