@@ -1,5 +1,9 @@
 install.packages(
+  "countdown",
+  "dplyr",
+  "fontawesome",
   "ggridges",
+  "holepunch",
   "kableExtra",
   "knitr",
   "lavaan",
@@ -7,10 +11,5 @@ install.packages(
   "plotly",
   "rio",
   "rmarkdown",
-  "tidyverse",
-  "devtools",
-  "usethis"
+  "tidyverse"
 )
-
-devtools::install_github("rstudio/fontawesome")
-devtools::install_github("gadenbuie/countdown")

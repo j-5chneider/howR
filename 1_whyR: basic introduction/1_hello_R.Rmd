@@ -741,8 +741,8 @@ Die meisten Cheatsheets sind [hier](https://rstudio.com/resources/cheatsheets/) 
 ## Daten importieren
 
 ```{r, echo=T, eval=F}
-name.des.Objekts <- ???(argument1 = ???,
-                        ...)
+# name.des.Objekts <- ???(argument1 = ???,
+#                         ...)
 ```
 
 * Funktionen:
