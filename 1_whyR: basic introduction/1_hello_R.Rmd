@@ -1,5 +1,5 @@
 ---
-title: "Hello there, ![](rlogo.png){width=75px}"  
+title: "Hello there, R"  
 subtitle: ""
 author: 
   - Jürgen Schneider
