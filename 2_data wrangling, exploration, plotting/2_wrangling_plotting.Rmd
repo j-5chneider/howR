@@ -397,7 +397,7 @@ gg_miss_upset(airquality)
 
 ## Check Data | missing data
 
-```{r , echo=T, fig.height=4, fig.width=4}
+```{r , echo=T, fig.height=4, fig.width=6}
 ggplot(airquality, aes(x = Solar.R, y = Ozone)) + 
   geom_miss_point()
 ```
