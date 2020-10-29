@@ -1,9 +1,6 @@
 install.packages(
-  "countdown",
   "dplyr",
-  "fontawesome",
   "ggridges",
-  "holepunch",
   "kableExtra",
   "knitr",
   "lavaan",
