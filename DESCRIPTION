@@ -1,0 +1,31 @@
+Type: Compendium
+Package: R Introduction
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.1
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com")
+Description: This is for the workshop of an introduction to R.
+License: What license it uses
+Depends: 
+    countdown,
+    dplyr,
+    fontawesome,
+    ggridges,
+    holepunch,
+    kableExtra,
+    knitr,
+    lavaan,
+    naniar,
+    plotly,
+    rio,
+    rmarkdown,
+    tidyverse
+Remotes: 
+    gadenbuie/countdown,
+    karthik/holepunch,
+    rstudio/fontawesome
+Encoding: UTF-8
+LazyData: true
