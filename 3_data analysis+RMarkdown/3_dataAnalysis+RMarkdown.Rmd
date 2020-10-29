@@ -156,6 +156,12 @@ Beispiel zu "Flexdashboard"
 ![](../www/twitter.jpg){width=70%}
 
 ## R & RMarkdown | `r fa(name = "rocket", fill = "#293133")` wohin geht's?
+
+jupyter Notebooks  
+`r fa(name = "long-arrow-alt-right", fill = "#293133")` eine browserbasierte R-Version meines kompletten R-Projekts  
+Beispiel [für Lehre](https://github.com/j-5chneider/qda-ss2020)
+
+## R & RMarkdown | `r fa(name = "rocket", fill = "#293133")` wohin geht's?
 Beispiel zu "RMarkdown ioslides"  
 
 Diese Folien :)
