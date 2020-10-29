@@ -1,5 +1,6 @@
 install.packages(
   "ggridges",
+  "kableExtra",
   "knitr",
   "lavaan",
   "naniar",
