@@ -1,4 +1,4 @@
-install.packages(
+install.packages(c(
   "countdown",
   "dplyr",
   "fontawesome",
@@ -11,5 +11,5 @@ install.packages(
   "plotly",
   "rio",
   "rmarkdown",
-  "tidyverse"
+  "tidyverse")
 )
