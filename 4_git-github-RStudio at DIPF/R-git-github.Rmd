@@ -1,0 +1,248 @@
+---
+title: "How to connect git, github & RStudio at DIPF"
+author: "Jürgen Schneider"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(fontawesome)
+```
+
+
+This is an instruction on how to get git up and running and how to connect 
+`r fa("github")` github to an `r fa("registered")` RStudio project via `r fa("git-alt")` 
+git.  
+  
+`r fa("registered")` `r fa("arrows-left-right")` `r fa("git-alt")` `r fa("arrows-left-right")` `r fa("github")` 
+
+\
+\
+
+# `r fa("git-alt")` Git
+
+First we have to download and install git.  
+  
+git is basically doing the versioning
+on your local (or in our case remote) computer and communicates the changes to  
+github (which is the _online_ repository) if we tell it to do so.
+
+## 1. Installation
+
+* Go to [git-scm.com/download/win](https://git-scm.com/download/win)
+* Click on the version "64-bit Git for Windows Portable", this should start the download of an exe-file
+* Execute the exe-file (should be called "PortableGit ... .exe") and save to a local folder (e.g. "Downloads")
+* Now there should be a folder "PortableGit" in you selected location
+
+## 2. make git accessible to RStudio  {.tabset}
+
+RStudio is running on a remote desktop (computer), so RStudio needs to have 
+access to git from this computer. To my knowledge, there are two ways of doing 
+this - both are somewhat nasty in my opinion.
+ 
+### option 1: refer to your (or the public) network drive
+
+* Copy the folder "PortableGit" to your network drive or the public network drive
+* In RStudio got to the menu "Tools" > "Global Options..."
+* Go to "Git/SVN" (see picture below)
+* Click "Browse..." for the Git executable
+* Go to the "PortableGit" folder on your (or the public) network drive
+* Select the file "git.exe" in the folder "PortableGit\bin" (subfolder "bin")
+* Click "Open" and "OK"
+
+![](../www/access1.jpg)
+
+### option 2: refer to the remote desktop
+
+You can also copy the folder "PortableGit" to the remote desktop and make 
+RStudio (which runs on the same remote desktop) access git there.
+
+* In RStudio click on the blue gear symbol in the right-bottom pane (see picture below)
+* This will open the windows explorer (folder) from the remote desktop. You can now copy the the folder "PortableGit" from your computer to the remote desktop. Choose any folder on the remote desktop that makes sense to you. In the example chose "Downloads".
+* In RStudio got to the menu "Tools" > "Global Options..."
+* Go to "Git/SVN" (see second picture below)
+* Click "Browse..." for the Git executable
+* Go to the "PortableGit" folder on the remote desktop
+* Select the file "git.exe" in the folder "PortableGit\bin" (subfolder "bin")
+* Click "Open" and "OK"
+
+![](../www/remote.jpg)  
+  
+![](../www/access2.jpg)
+
+## 3. let git know who you are
+
+git wants to know your name and email, otherwise it won't stop asking about
+this information. Give git this info by typing the following into the "terminal" 
+(not "console") in RStudio, usually you will find the terminal in the 
+bottom-left pane in RStudio:
+  
+__Give your name__  
+`git config --global user.name "Your Name"`  
+Replace "Your Name" with... well... your name. So for example:  
+`git config --global user.name "Jürgen"`  
+  
+__Give your email__  
+`git config --global user.email you@example.com`
+Replace you@example.com with the email you use at github.com. So for example:  
+`git config --global user.email juergen-privat@bundestag.de`
+
+![](../www/terminal.jpg)
+
+\
+\
+\
+
+# `r fa("shield-halved")` SSH key
+
+Setting up an SSH connection makes communication between RStudio and Github 
+more secure.
+
+__Create SSH key in RStudio:__  
+
+* In RStudio got to the menu "Tools" > "Global Options..."
+* Go to "Git/SVN" (see first picture below)
+* Click "Create RSA Key..."
+* Put in a password if you want (not needed)
+* Click "Create", close the popup
+* Click "View public key" and copy the entire thing
+
+![](../www/rstudio_ssh.jpg)
+
+__Provide the key to github:__  
+
+* Go to [github](https://github.com/)
+* Click your account icon on the top right corner (see second picture below)
+* Select "Settings"
+* Go to "SSH and GPG keys" (see third picture below)
+* Click "New SSH key"
+* Provide title (can be chosen freely, e.g. "DIPF remote desktop")
+* Paste the SSH public key to the "Key" field
+
+![](../www/github_settings.jpg)  
+  
+![](../www/github_ssh1.jpg)
+
+\
+\
+\
+
+# `r fa("user-lock")` Personal Access Token (PAT)
+
+Obviously you have to let github know that it is you that wants to push changes 
+in your files to the repository (i.e. you have to identify yourself somehow). 
+In the past, RStudio asked for your login details every time you wanted to push 
+something to github.  This is now solved with a PAT, that you can provide one 
+time and (hopefully) save it for the next times you want to push something to 
+github.
+
+* Go to [github](https://github.com/)
+* Click your account icon on the top right corner (see first picture below)
+* Select "Settings"
+* Go to "Developer settings" (at the bottom right)
+* Go to "Personal access tokens"
+* Click on "Generate new token"
+* Provide your github password
+* Enter a description of what the token is for (e.g. which computer) in the "Note" field. (can be chosen freely, e.g. "DIPF remote desktop")
+* Set "Expiration" to "No expiration" (see second picture below)
+* Check the box "repo" 
+* Click "Generate token"
+* Copy the PAT that was created. It looks somewhat like this `ghp_Xki6jGtohH3xFD2SF1O3KQSXeCs93I3Ql5DL`
+* Save the PAT for a short time, you will need it later. You can't come back and recreate it!
+
+![](../www/github_settings.jpg)  
+  
+![](../www/pat.jpg)  
+
+
+\
+\
+\
+
+# `r fa("github")` Connect github and an R-project
+
+When you want to have an R-project connected to github, the workflow is like 
+this:
+
+## Set up github repository first (!)
+
+1. After logging into github click "New" on the top left (see first picture)
+2. When creating the new repo
+   + Provide a repo name (I normally use the project name)
+   + Check "Add a README file"
+   + Choose ".gitignore template: R"
+   + Choose "License: Creative Commons Zero"
+   + Click "Create repository"
+3. Click on "Code" and copy the URL of the repo
+
+![](../www/new_repo.jpg)  
+  
+![](../www/create_repo.jpg)  
+  
+![](../www/repo_copy.jpg)
+
+## Create a new R-project
+
+1. In RStudio go to the menu "File" > "New Project..."
+2. Click "Version Control" > "Git"
+3. Paste the URL of the repo to the "Repository URL" field, and save it under the folder of your choosing
+
+RStudio now __"pulls"__ the repo from github to your folder. 
+
+You can now "do R 
+stuff": Make changes like creating new files, code etc.  
+
+## "Commit" and "push" changes to github
+  
+Normally the files containing changes will appear in the "Environment" pane on 
+the top right.
+
+1. Activate the git tab to see the list (you may have to refresh the tab, see first picture).
+2. If you want to push changes to github, click "Commit"
+3. Check all files you want to commit, provide a commit message and click "Commit" (see second picture)
+4. Close the popup window
+5. Then click "push" (green arrow)
+6. Close the popup window (you can now check on github if the files were synchronized)
+
+
+The very first time you push, you'll need to provide your PAT. There will be a 
+popup window asking you how you want to identify yourself. Choose the last 
+option and provide your PAT. If I'm not mistaken you have to provide your PAT 
+two times. After that it should be saved and you can commit and push without 
+the need of identification.
+ 
+![](../www/rstudio_git.jpg)
+  
+![](../www/commit.jpg)
+
+## Workflow and Troubleshooting {.tabset}
+
+### Recommended workflow
+
+When working with R-projects that are connected to a github repo it makes sense to always:
+
+1. First "pull" from the github repo right after starting RStudio. <br />`r fa("arrow-right")` I (or other people) often worked on a project from another computer and the files on the computer I am working on currently were not up to date. If you pull first you make sure everything is up to date.
+2. Work on your project
+3. Commit and push everything at the end of the day (or working session).
+
+"But what if the github repo is _behind_ and I 'pull', won't my newer local 
+files be deleted?"  
+`r fa("arrow-right")` No. git knows that these files are ahead (newer) and won't delete 
+changes.
+
+### Can I connect _existing_ projects to github?
+
+My recommendation is __always__ to first set up a github repo and then create 
+an R-project. You can connect an already existing project to a github repo that 
+you created afterward, but to be honest, it's a pain.  
+  
+Therefore, my recommendation for these cases is to create a github repo, then 
+create a _new_ R-project and simply copy your R-files from the old project to the 
+new project. You can then commit and push the changes in the new R-project and 
+voilà the files are on github.
+
