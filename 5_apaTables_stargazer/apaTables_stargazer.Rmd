@@ -1,0 +1,232 @@
+---
+title: "Checking out packages `apaTables` & `stargazer`"
+author: "Jürgen Schneider"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE)
+# library(fontawesome)
+# `r fa("git-alt")`
+```
+
+\
+\
+
+
+# apaTables
+
+Check out the vignette on [github pages](https://dstanley4.github.io/apaTables/articles/apaTables.html).
+
+\
+\
+
+## load package(s)
+
+```{r}
+library(apaTables)
+
+# I don't get out of bed without...
+library(tidyverse)
+library(skimr)
+```
+
+\
+\
+
+
+## check out integrated data set {.tabset}
+
+### via `glimpse`
+
+You can use `glimpse` to get a glimpse (obviously)
+```{r, eval=FALSE}
+library(tidyverse)
+glimpse(attitude)
+```
+
+### via `skimr`
+
+Or `skim` to get descriptives
+
+```{r, eval=FALSE}
+library(skimr)
+skim(attitude)
+```
+
+
+
+\
+\
+
+
+
+## Correlation
+
+This package is illegally simple to use. The downside: There are close to none setting options.   
+  
+Functions always need three arguments:
+
+```{r, results='hide'}
+apa.cor.table(attitude,  # provide the data set / fit objects
+              filename="exported_tables/Table1_APA1.doc", # where should the doc be saved?
+              table.number=1   # which number should the table have?
+              )
+```
+
+\
+\
+
+
+## Regression tables 1 {.tabset}
+
+### Task
+
+1. check out the data set `album` that comes with the package
+2. make 2 regressions:
+   + regress `sales`on `adverts` and `airplay` without interaction
+   + regress `sales`on `adverts` and `airplay` with interaction
+3. plot both results in one table with `apa.reg.table()`
+
+
+### I need help with the regressions
+
+Have you tried these things?
+
+* The function for regressions is `lm()`
+* `lm()` need two arguments: a formula and the data
+   + the data is `album`
+   + the formula has the form `DV ~ predictor1 + predictor2 + ...`
+   + to specify an interaction you'll simply need to multiply the two predictors and add this to the formula (`... + (predictor1 * predictor2)`)
+   
+   
+### I need help with `apa.reg.table()`
+
+* check out the help via `?apa.reg.table`
+* check out the [vignette under "blocks regression table"](https://dstanley4.github.io/apaTables/articles/apaTables.html)
+
+### Solution
+
+
+```{r, results='hide'}
+glimpse(album)
+
+# Regression 1
+block1 <- lm(sales ~ adverts + airplay, 
+             data = album)
+
+# Regression 2
+block2 <- lm(sales ~ adverts + airplay + (adverts*airplay), 
+             data = album)
+
+# Create table
+apa.reg.table(block1, block2, 
+              filename = "exported_tables/Table3_APA.doc", 
+              table.number = 3)
+```
+
+
+\
+\
+
+## Regression tables 2
+
+After you checked out `stargazer`:  
+Try out the package with your own data?
+
+
+\
+\
+
+
+
+
+# stargazer
+
+Check out the [cheat sheet](https://www.jakeruss.com/cheatsheets/stargazer).  
+  
+When using stargazer in RMarkdown you'll need to
+
+1. use the argument `type = "html"`
+2. set chunk options to `{r, results='asis'}`
+
+When using stargazer in RStudio (console output) you'll need to
+
+1. use the argument `type = "text"`
+
+
+```{r, results='asis'}
+library(stargazer)
+
+stargazer(album, type = "html")
+```
+
+\
+\
+
+Then you'd need to copy and paste the Table to Word.
+
+\
+\
+
+
+## Regression table {.tabset}
+
+### task
+
+1. Use the two regression fit objects you created before and use them in `stargazer`!
+2. Tweak the table to your liking. You could for example...
+   + display t and p-values instead of SE (with the `report` argument -> check the help!)
+   + change the variable labels (check out the [description in the vignette](https://www.jakeruss.com/cheatsheets/stargazer/#labelling-the-table))
+   
+### Solution 1
+
+```{r, eval=FALSE}
+stargazer(block1, block2, type = "text")
+```
+
+```{r, echo=FALSE, results='asis'}
+stargazer(block1, block2, type = "html")
+```
+
+### Solution 2a
+
+```{r, eval=FALSE}
+stargazer(block1, block2, 
+          type = "text", 
+          title            = "These are awesome results!",
+          covariate.labels = c("Evil Adverts", "Strong Winds", "Interaction(Adverts*Winds)"),
+          dep.var.caption  = "Effects on..",
+          dep.var.labels   = "Feeding time of 1 Gummibärchenpackung")
+```
+
+```{r, echo=FALSE, results='asis'}
+stargazer(block1, block2, 
+          type = "html", 
+          title            = "These are awesome results!",
+          covariate.labels = c("Evil Adverts", "Strong Winds", "Interaction(Adverts*Winds)"),
+          dep.var.caption  = "Effects on..",
+          dep.var.labels   = "Feeding time of 1 Gummibärchenpackung")
+```
+
+### Solution 2b
+
+
+```{r, eval=FALSE}
+stargazer(block1, block2, 
+          type = "text", 
+          report = "vctp")
+```
+
+```{r, echo=FALSE, results='asis'}
+stargazer(block1, block2, 
+          type = "html", 
+          report = "vctp")
+```
