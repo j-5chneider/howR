@@ -1,0 +1,221 @@
+---
+title: "Quarto"
+subtitle: "Options and Basic Intro"
+author:
+  - name: "Jürgen Schneider"
+    email: "ju.schneider@dipf.de"
+    affiliation: "DIPF"
+    correspondence: true
+  - name: "Exemplary Coauthor"
+    affiliation: "Other Institute"
+date: "`r Sys.Date()`" # inserts the date of compiling
+editor: source
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false # true will prevent embed-resources
+format: 
+  html:
+    theme: solar
+    fontsize: 0.85em
+    toc: true
+    toc-location: left
+    toc-depth: 4
+    embed-resources: true # will make standalone html file
+    code-fold: show
+    code-tools: true
+    code-link: true
+---
+
+# Session Info
+
+Always provide your R-Version and libraries when producing reproducible reports.
+
+```{r}
+library(here)
+library(xfun)
+library(palmerpenguins)
+
+sessionInfo()
+```
+
+
+
+# Options & Layout
+
+::: callout-tip
+## Basic intro to Quarto
+<https://quarto.org/docs/get-started/hello/rstudio.html>
+:::
+
+
+## YAML
+
+```{yaml}
+#| eval: false
+---
+title: "Test"
+author:
+  - name: "Jürgen Schneider"
+    email: "ju.schneider@dipf.de"
+    affiliation: "DIPF"
+    correspondence: true
+  - name: "First Coauthor"
+    affiliation: "other institute"
+date: "`r Sys.Date()`" # inserts the date of compiling
+editor: source
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false # true will prevent embed-resources
+format: 
+  html:
+    theme: solar
+    fontsize: 0.85em
+    toc: true
+    toc-location: left
+    toc-depth: 4
+    embed-resources: true # will make standalone html file
+    code-fold: show
+    code-tools: true
+    code-link: true
+---
+```
+
+## Themes
+
+Check out different themes:
+
+<https://quarto.org/docs/output-formats/html-themes.html>
+
+and put the name as argument in:
+
+```{yaml}
+#| eval: false
+
+format: 
+  html:
+    theme: solar
+```
+
+## Standalone HTML
+
+::: panel-tabset
+### Option 1
+
+In the **YAML** set `embed-resources: true`
+
+```{yaml}
+#| eval: false
+
+format: 
+  html:
+    embed-resources: true 
+```
+
+**and don't** set `cache: true`. So, cache must be false:
+
+```{yaml}
+#| eval: false
+
+execute:
+  cache: false
+```
+
+### Option 2
+
+If you need to set `cache: true`, you might be able to embed resources by adding an additional r cell (chunk) with this content:
+
+```{r}
+#| eval: false
+
+# This will (sometimes...) prevent embed-resources to be prevented when cache: true
+knitr::opts_chunk$set(fig.path = knitr::opts_chunk$get('cache.path'))
+```
+
+This works sometimes, but not always - in my experience.
+
+### Check and troubleshoot
+
+-   While rendering the file, quarto generates a "...\_files" folder in the files-pane of RStudio. This folder should disappear after rendering is done. If it doesn't disappear, the html file probably isn't standalone.
+-   If you think you have set all options correct for the file to be standalone and it still doesn't work:
+    -   Create a new quarto file with a new name
+    -   copy the code from the old file and paste it to the new file
+    -   try rendering the new file
+:::
+
+
+# Running R Code
+
+::: callout-tip
+## Computations in Quarto
+<https://quarto.org/docs/get-started/computations/rstudio.html>
+:::
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+plot(iris$Sepal.Length, iris$Sepal.Width)
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+# Other (cool) stuff
+::: callout-tip
+## Basic intro to Quarto
+<https://quarto.org/docs/get-started/authoring/rstudio.html>
+:::
+
+
+## Embed any file in the HTML
+
+Use the `xfun` package to embed any file into the html. Users can click and download the file from there without internet connection.
+
+Click here to download the `r xfun::embed_file(here('www/never.gif'), text = "qualitative data")` on the topic of never giving up.
+
+Here I used the function `embed_file()`:
+
+```{r}
+#| eval: false
+`r xfun::embed_file(here("www/never.gif"), text = "qualitative data")`
+```
+
+The function `here()` will always start searching for the file from the working directory. This is important, if you move the qmd-file to other folders.
+
+
+## Tabsets
+
+Wrap `::: {.panel-tabset}` and `:::` around headings. For example:
+
+```{quarto}
+#| eval: false
+
+::: {.panel-tabset}
+
+## This is tab 1
+This is text within the tab.
+
+## This is tab 2
+plot(penguins$bill_length_mm, penguins$bill_depth_mm)
+
+:::
+
+```
+
+
+## Mathematical Equations
+
+## References
+
+## Callouts
+
+## Output Formats
