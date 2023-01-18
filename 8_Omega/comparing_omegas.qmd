@@ -1,0 +1,200 @@
+---
+title: "McDonalds Omega"
+subtitle: "Comparing three packages"
+author:
+  - name: "Jürgen Schneider"
+    email: "ju.schneider@dipf.de"
+    affiliation: "DIPF"
+    correspondence: true
+date: "`r Sys.Date()`" # inserts the date of compiling
+editor: source
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false # true will prevent embed-resources
+format: 
+  html:
+    theme: solar
+    fontsize: 0.85em
+    toc: true
+    toc-location: left
+    toc-depth: 4
+    embed-resources: true # will make standalone html file
+    code-fold: show
+    code-tools: true
+    code-link: true
+editor_options: 
+  chunk_output_type: console
+---
+
+# loading packages
+
+```{r}
+library(tidyverse)
+library(psych)
+library(MBESS)
+library(lavaan)
+library(semTools)
+library(palmerpenguins)
+library(faux)
+library(skimr)
+library(here)
+library(responsesR)
+```
+
+
+# R Version
+
+```{r}
+sessionInfo()
+```
+
+
+
+# First data set
+
+Simulating correlated data
+
+```{r}
+mydata1 <- dat <- rnorm_multi(n = 800, 
+                              mu = c(3.4, 3.5, 3.6, 3.7),
+                              sd = c(0.9, 1, 1.1, 1.2),
+                              r = c(.5, .55, .6, .65, .7, .75), 
+                              varnames = c("A", "B", "C", "D"),
+                              empirical = FALSE)
+
+skim(mydata1)
+```
+
+
+
+## psych package
+
+```{r}
+psych::omega(mydata1)
+psych::omega(mydata1, nfactors = 1)
+```
+
+
+## mbess
+
+```{r}
+MBESS::ci.reliability(data = mydata1, type = "omega")
+```
+
+
+## semtools
+
+Following decision tree (Fig. 4) in paper <https://doi.org/10.1177/2515245920951747>, we need to compute $\omega_u$ **for a one dimensional model** with continuous variables **with 5 or more response options**.
+
+![](`r here("www/decision_tree.jpeg")`)
+
+```{r}
+model <- 'ABC =~ A + 
+                 B + 
+                 C + 
+                 D'
+
+fit_m <- cfa(model, 
+             data = mydata1, 
+             std.lv=T, 
+             missing='direct', 
+             estimator='MLR')
+
+reliability(fit_m)
+```
+
+
+
+# Second data set
+
+Simulating Likert scale data (not correlated).
+
+```{r}
+mydata2 <- rLikert(size = 800, items = 4, levels = 6)
+
+skim(mydata2)
+```
+
+
+
+## psych package
+
+```{r}
+psych::omega(mydata2)
+psych::omega(mydata2, nfactors = 1)
+```
+
+
+## mbess
+
+```{r}
+MBESS::ci.reliability(data = mydata2, type = "omega")
+```
+
+
+## semtools
+
+Following decision tree (Fig. 4) in paper <https://doi.org/10.1177/2515245920951747>, we need to compute $\omega_u$ **for a one dimensional model** with continuous variables **with 5 or more response options**.
+
+![](`r here("www/decision_tree.jpeg")`)
+
+```{r}
+model <- 'ABC =~ X1 + 
+                 X2 + 
+                 X3 + 
+                 X4'
+
+fit_m <- cfa(model, 
+             data = mydata2, 
+             std.lv=T, 
+             missing='direct', 
+             estimator='MLR')
+
+reliability(fit_m)
+```
+
+
+
+# Third data set
+
+```{r}
+mydata3 <- penguins[c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g")]
+
+skim(mydata3)
+```
+
+
+
+## psych package
+
+```{r}
+psych::omega(mydata3)
+psych::omega(mydata3, nfactors = 1)
+```
+
+
+## mbess
+
+```{r}
+MBESS::ci.reliability(data = mydata3, type = "omega")
+```
+
+
+## semtools
+
+```{r}
+model <- 'penguin =~ bill_length_mm + 
+                     bill_depth_mm + 
+                     flipper_length_mm + 
+                     body_mass_g'
+
+fit_m <- cfa(model, 
+             data = mydata3, 
+             std.lv=T, 
+             missing='direct', 
+             estimator='MLR')
+
+reliability(fit_m)
+```
