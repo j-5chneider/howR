@@ -102,7 +102,11 @@ fit_m <- cfa(model,
              missing='direct', 
              estimator='MLR')
 
+# depricated function in semTools
 reliability(fit_m)
+
+# new function in semTools
+compRelSEM(fit_m)
 ```
 
 
@@ -152,7 +156,11 @@ fit_m <- cfa(model,
              missing='direct', 
              estimator='MLR')
 
+# depricated function in semTools
 reliability(fit_m)
+
+# new function in semTools
+compRelSEM(fit_m)
 ```
 
 
@@ -196,5 +204,9 @@ fit_m <- cfa(model,
              missing='direct', 
              estimator='MLR')
 
+# depricated function in semTools
 reliability(fit_m)
+
+# new function in semTools
+compRelSEM(fit_m)
 ```
