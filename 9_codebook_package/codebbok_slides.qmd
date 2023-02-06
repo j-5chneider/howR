@@ -1,0 +1,209 @@
+---
+title: '(Halb-) Automatisiert Codebooks erstellen' 
+subtitle: 'Reproduzierbarkeit und Nachnutzung fördern mit dem codebook Package'
+title-slide-attributes:
+  data-background-image: ../www/transparent.jpg
+  data-background-size: cover
+  data-background-opacity: "0.3"
+author: "Jürgen Schneider"
+date: last-modified # today
+date-format: "DD MMMM YYYY"
+format: 
+  revealjs:
+      theme: [sky, ../www/custom.scss] # sky default
+      logo: ../www/dipf-logo.png
+      footer: "Slides: ..."
+      smaller: true
+      scrollable: true
+bibliography: ../www/references.bib
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+---
+
+```{r setup, include=FALSE}
+# knitr::opts_chunk$set(echo = FALSE,
+#                       message=FALSE, 
+#                       warning=FALSE)
+
+### DOWNLOAD NEWEST SOURCES
+# download.file("https://drive.google.com/uc?export=download&id=1ASV99YHMHSNChSNzqbZwvz2SiqYvmqO_", # befindet sich im DIPF Ordner
+              # "www/references.bib", overwrite = T)
+library(fontawesome)
+library(ggplot2)
+library(kableExtra)
+```
+
+
+# Test
+
+## Reproduzierbarkeit
+#### Reproduzierbarkeit vs. Replizierbarkeit
+\
+\
+
+Reproduzierbarkeit und Replizierbarkeit zwischen Disziplinen unterschiedlich verwendet [@barba.2018]
+  
+. . .
+  
+\
+
+::: {.callout-note icon=false}
+### Reproduzierbarkeit
+"obtaining consistent results using the **same input data; computational steps, methods, and code**; and conditions of analysis" [@nas.2019, p. 46]
+:::
+= "computational reproducibility"
+\
+  
+::: {.callout-note icon=false}
+### Replizierbarkeit
+"obtaining consistent results **across studies** aimed at answering the same scientific question, each of which has obtained its **own data**" [@nas.2019, p. 46]
+:::
+
+
+## Reproduzierbarkeit
+#### Warum?
+\
+\
+
+* Prüfen von "scientific claims" (Transparenz `r fa(name = "long-arrow-alt-right")` Lesende beurteilen selbst)
+  - Robustness: Alternative Auswertungen durch Reviewer\*innen / Lesende
+  - Selective reporting (z. B. erkennbar welche Variablen nicht berichtet wurden)
+  - P-hacking (z. B. erkennbar welche Ausprägungen Variablen hatten vor Gruppierung)<br /><br />
+* Fördert auch Replikationen [@erringtonetal.2021]<br /><br />
+* Eigene Nachvollziehbarkeit des Datensatzes & der Analysen
+
+::: {.notes}
+* "To evaluate a scientific claim one needs access to the evidence supporting the claim"
+  - "tendency of authors to report what they perceive to be important"
+  - Transparenz: Lesende können selbst beurteilen, wie sie die evidenz einschätzen
+* 
+:::
+
+## Reproduzierbarkeit
+#### Optimierungspotential
+\
+\
+
+**@artneretal.2021**: **232** scientific claims aus **46** Zeitschriftenartikel
+
+
+```{r}
+#| fig-width: 15
+#| fig-height: 9
+#| fig-align: center
+#| fig-dpi: 300
+
+artner <- data.frame(what = factor(c("scientific claims",
+                                     "reproducible",
+                                     "reproducible (strict)",
+                                     "reproducible (strict) \n& procedure of paper"),
+                                   levels = c("scientific claims",
+                                     "reproducible",
+                                     "reproducible (strict)",
+                                     "reproducible (strict) \n& procedure of paper")),
+                     count = c(232, 163, 137, 119),
+                     percent = c("100 %", "70 %", "59 %", "51 %"))
+
+ggplot(artner, aes(x=what, y=count)) +
+  stat_summary(fun=mean, colour="#ff4c4c", geom="line", aes(group = 1), size = 3) +
+  geom_point(size = 6) +
+  annotate("text", x = artner$what, y = artner$count - 15, label = artner$percent, size = 6) +
+  scale_y_continuous(limits = c(0,235)) +
+  xlab("") +
+  theme_light() +
+  theme(text = element_text(size = 24))
+```
+
+::: {.notes}
+163 (70%) of the 232 (not in a strict sense (59%), e.g. df) (only for 52% if procedure in the paper was followed)
+:::
+
+
+## Points | test
+
+* Warum Reproduzierbarkeit wichtig ist
+  - Reproduzierbarkeit ist nicht immer geil
+    [@artneretal.2021]: 
+      - 163 (70%) of the 232 (not in a strict sense (59%), e.g. df) (only for 52% if procedure in the paper was followed)
+      - 
+
+* Warum Förderung von Nachnutzung wichtig ist
+  - Was ist Nachnutzung? (Lehre, weitere RQ, Forschungssynthesen)
+  - Meta-analysen
+  - Datensätze selten vollständig erschöpft
+  - FAIR Data
+* Wie Codebook dabei hilft Reproduzierbarkeit & Nachnutzung zu fördern
+  - Analysen und Datensatz (auch jenseits der RDA) besser nachvollziehen
+  - Datensatz mit / ohne codebook (within?)
+* Hands on
+
+Mein Datensatz: https://doi.org/10.4232/1.13468
+
+* Roles of a codebook
+  - high-level summary of the data (meaningful labels)
+    (1) easier to discover errors, miscoded missing values, oddly shaped distributions
+        -> allowing data creators to clean their data sets more efficiently and reproducibly
+    (2) helps to explain an unfamiliar data set to researchers who want to reproduce analyses or reuse the data
+        -> ideally combined with text explaining the structure and nature of the data set
+        -> fewer errors resulting from analyzing a data set without understanding measurement specifics
+  - stamndardization
+    (1) easier for researchers to make sense of data (but they can make do)
+    (2) search engines rely on standardized metadata
+* codebook package
+  - exportable to html & pdf
+  - includes: metadata (variable names, value names); data summaries; 
+  - making data-set contents and structure more transparent -> easier to judge if I want to reuse data
+  long term
+  - machine readable
+  - meta-analyses
+  - relevant unpublished effect sizes could be discovered more easily
+* maximales codebook zeigen
+* schrittweise ergänzen
+
+## Slide with a pause
+
+content before the pause
+
+. . .
+
+content after the pause
+
+::: aside
+Some additional commentary of more peripheral interest.
+:::
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+
+## Bullets {.scrollable}
+
+When you click the **Render** button a document will be generated that includes:
+
+-   Content authored with markdown
+-   Output from executable code
+- point3
+- point4
+- point4
+- point4
+- point4
+- point4
+- point4
+- point4
+- point4
+- point4
+- point4
+- point4
+
+## Code
+
+When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+
+# Credit
+
+Foto title page by <a href="https://unsplash.com/@harlynkingm?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Max Harlynking</a> on <a href="https://unsplash.com/de/fotos/PreLE0ZJVQ0?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+  
