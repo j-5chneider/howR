@@ -5,7 +5,7 @@ title-slide-attributes:
   data-background-image: ../www/transparent.jpg
   data-background-size: cover
   data-background-opacity: "0.3"
-author: "Jürgen Schneider"
+author: "<b>Jürgen Schneider</b>"
 date: last-modified # today
 date-format: "DD MMMM YYYY"
 format: 
@@ -33,7 +33,6 @@ library(kableExtra)
 ```
 
 
-# Test
 
 ## Reproduzierbarkeit
 #### Reproduzierbarkeit vs. Replizierbarkeit
@@ -118,36 +117,124 @@ ggplot(artner, aes(x=what, y=count)) +
 :::
 
 
-## Points | test
+## Nachnutzung | Definition
 
-* Warum Reproduzierbarkeit wichtig ist
-  - Reproduzierbarkeit ist nicht immer geil
-    [@artneretal.2021]: 
-      - 163 (70%) of the 232 (not in a strict sense (59%), e.g. df) (only for 52% if procedure in the paper was followed)
-      - 
+::: {.callout-note icon=false}
+### Archivierung
+* langfristige Speichern von Forschungsdaten typischerweise auf einschlägigen __Repositorien__
+* __nicht__ primär der Zweck der Nachnutzung (sondern beispielsweise der Transparenz)
+:::
+  
+  
+::: {.callout-note icon=false}
+### Bereitstellung
+* Aufbereitung & Kontextualisierung von Forschungsdaten
+* Speicherung auf __Forschungsdatenzentren__
+* __primär__ der Zweck der Nachnutzung
+:::
 
-* Warum Förderung von Nachnutzung wichtig ist
-  - Was ist Nachnutzung? (Lehre, weitere RQ, Forschungssynthesen)
-  - Meta-analysen
-  - Datensätze selten vollständig erschöpft
-  - FAIR Data
-* Wie Codebook dabei hilft Reproduzierbarkeit & Nachnutzung zu fördern
-  - Analysen und Datensatz (auch jenseits der RDA) besser nachvollziehen
-  - Datensatz mit / ohne codebook (within?)
-* Hands on
+Anforderung bei Drittmittel [@bmbf.2021a; @europeancommission.2017c; @dfg.2015; @dfg.2022]
 
-Mein Datensatz: https://doi.org/10.4232/1.13468
+::: {.callout-note icon=false}
+### Nachnutzung
+* Reanalyse, Replikation, Sekundärdatenanalyse
+* Forschungssynthesen
+* Einsatz in der Lehre
+:::
 
-* Roles of a codebook
-  - high-level summary of the data (meaningful labels)
-    (1) easier to discover errors, miscoded missing values, oddly shaped distributions
-        -> allowing data creators to clean their data sets more efficiently and reproducibly
-    (2) helps to explain an unfamiliar data set to researchers who want to reproduce analyses or reuse the data
-        -> ideally combined with text explaining the structure and nature of the data set
-        -> fewer errors resulting from analyzing a data set without understanding measurement specifics
-  - stamndardization
-    (1) easier for researchers to make sense of data (but they can make do)
-    (2) search engines rely on standardized metadata
+[@dgfe.2017]
+
+::: {.notes}
+* entsprechend findet eine geringere Aufbereitung und Dokumentation der Daten statt
+* Nachnutzung: Reanalyse (auch andere Modelle können getestet werden)
+:::
+
+
+## Nachnutzung | Warum
+
+* Ressourcenschonung
+* Analysepotantial oftmals nicht ausgeschöpft
+* Forschungssynthesen (z.B. meta-analytic SEM)
+
+
+::: {.notes}
+Überfrachtungen bestimmter Forschungsfelder vermeiden (vulnerable Gruppen)
+:::
+
+
+# Wie hilft ein Codebook?
+
+## FAIR Data herstellen
+
+
+:::: {.columns}  
+::: {.column width="25%"}
+ <div class="blueTop">**F**indable</div>  
+ <div class="blueBottom"></div>  
+:::  
+::: {.column width="25%"}
+ <div class="blueTop">**A**ccessible</div>  
+ <div class="blueBottom"></div>  
+:::  
+::: {.column width="25%"}
+ <div class="blueTop">**I**nteroperable</div>  
+ <div class="blueBottom"></div>  
+:::
+::: {.column width="25%"}
+ <div class="blueTop">**R**eusable</div>  
+ <div class="blueBottom"></div>  
+:::
+::::
+
+
+
+## FAIR Data herstellen
+
+
+:::: {.columns}  
+::: {.column width="25%"}
+ <div class="blueTop">**F**indable</div>  
+ <div class="blueBottom">F2. Daten werden mit umfangreichen Metadaten beschrieben<br /><br />
+ *"Forscherinnen und Forscher sollten jeden Datensatz sorgfältig und möglichst vollständig mit Metadaten beschreiben."*</div>  
+:::  
+::: {.column width="25%"}
+ <div class="blueTop">**A**ccessible</div>  
+ <div class="blueBottom"></div>  
+:::  
+::: {.column width="25%"}
+ <div class="blueTop">**I**nteroperable</div>  
+ <div class="blueBottom"></div>  
+:::
+::: {.column width="25%"}
+ <div class="blueTop">**R**eusable</div>  
+ <div class="blueBottom">R1. (Meta)Daten sind detailliert beschrieben und enthalten präzise, relevante Attribute<br /><br />
+ *"Eine gute Beschreibung von Daten und Metadaten sorgt dafür, dass die Daten für die zukünftige Forschung wiederverwendet werden können"*</div>  
+:::
+::::
+
+
+[@wilkinsonetal.2016]
+
+TIB-Blog: [Rolle der Wissenschaftler*innen](https://blogs.tib.eu/wp/tib/2017/09/12/die-fair-data-prinzipien-fuer-forschungsdaten/)[@kraft.2017a]
+
+
+## Codebook
+
+* provides the metadata
+  - Erklärt Variablen- und Wertelabels
+  - high level summary der Daten
+
+  -> ermöglicht Nachvollziehbarkeit der Daten (auch für eigene Arbeitsgruppe)  
+  -> verbessert Reproduzierbarkeit und Nachnutzung
+* Vorteil für Bereitstellende: easier to discover errors, miscoded missing values, oddly shaped distributions
+  -> allowing data creators to clean their data sets more efficiently and reproducibly
+* nicht zu unterschätzen: Standardisierung
+  (1) easier for researchers to make sense of data (but they can make do)
+  (2) search engines rely on standardized metadata
+
+
+## codebook package
+
 * codebook package
   - exportable to html & pdf
   - includes: metadata (variable names, value names); data summaries; 
@@ -156,54 +243,29 @@ Mein Datensatz: https://doi.org/10.4232/1.13468
   - machine readable
   - meta-analyses
   - relevant unpublished effect sizes could be discovered more easily
+
+## Punkte
+
+
+* Wie Codebook dabei hilft Reproduzierbarkeit & Nachnutzung zu fördern
+  - Analysen und Datensatz (auch jenseits der RDA) besser nachvollziehen
+  - Datensatz mit / ohne codebook (within?)
+* Hands on
+
+Mein Datensatz: https://doi.org/10.4232/1.13468
+
 * maximales codebook zeigen
 * schrittweise ergänzen
 
-## Slide with a pause
 
-content before the pause
+# {-}
 
-. . .
 
-content after the pause
-
-::: aside
-Some additional commentary of more peripheral interest.
-:::
-
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
-
-## Bullets {.scrollable}
-
-When you click the **Render** button a document will be generated that includes:
-
--   Content authored with markdown
--   Output from executable code
-- point3
-- point4
-- point4
-- point4
-- point4
-- point4
-- point4
-- point4
-- point4
-- point4
-- point4
-- point4
-
-## Code
-
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
-```
+<div id="refs"></div>
 
 
 # Credit
+Icons by Font Awesome CC BY 4.0
 
 Foto title page by <a href="https://unsplash.com/@harlynkingm?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Max Harlynking</a> on <a href="https://unsplash.com/de/fotos/PreLE0ZJVQ0?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
   

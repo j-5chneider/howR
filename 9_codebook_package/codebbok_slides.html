@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.2.269">
 
   <meta name="author" content="Jürgen Schneider">
-  <meta name="dcterms.date" content="2023-02-02">
+  <meta name="dcterms.date" content="2023-02-06">
   <title>(Halb-) Automatisiert Codebooks erstellen</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -351,12 +351,12 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Jürgen Schneider 
+<b>Jürgen Schneider</b> 
 </div>
 </div>
 </div>
 
-  <p class="date">02 February 2023</p>
+  <p class="date">06 February 2023</p>
 </section>
 <section>
 <section id="test" class="title-slide slide level1 center">
@@ -456,46 +456,184 @@ Jürgen Schneider
           display:block!important;
       }</style></aside>
 </section>
-<section id="points-test" class="slide level2">
-<h2>Points | test</h2>
+<section id="nachnutzung-definition" class="slide level2">
+<h2>Nachnutzung | Definition</h2>
+<div class="callout callout-note no-icon callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<p><strong>Archivierung</strong></p>
+</div>
+<div class="callout-content">
 <ul>
-<li>Warum Reproduzierbarkeit wichtig ist
-<ul>
-<li>Reproduzierbarkeit ist nicht immer geil <span class="citation" data-cites="artneretal.2021">(<a href="#/credit" role="doc-biblioref" onclick="">Artner et al., 2021</a>)</span>:
-<ul>
-<li>163 (70%) of the 232 (not in a strict sense (59%), e.g.&nbsp;df) (only for 52% if procedure in the paper was followed)</li>
-<li></li>
-</ul></li>
-</ul></li>
-<li>Warum Förderung von Nachnutzung wichtig ist
-<ul>
-<li>Was ist Nachnutzung? (Lehre, weitere RQ, Forschungssynthesen)</li>
-<li>Meta-analysen</li>
-<li>Datensätze selten vollständig erschöpft</li>
-<li>FAIR Data</li>
-</ul></li>
-<li>Wie Codebook dabei hilft Reproduzierbarkeit &amp; Nachnutzung zu fördern
-<ul>
-<li>Analysen und Datensatz (auch jenseits der RDA) besser nachvollziehen</li>
-<li>Datensatz mit / ohne codebook (within?)</li>
-</ul></li>
-<li>Hands on</li>
+<li>langfristige Speichern von Forschungsdaten typischerweise auf einschlägigen <strong>Repositorien</strong></li>
+<li><strong>nicht</strong> primär der Zweck der Nachnutzung (sondern beispielsweise der Transparenz)</li>
 </ul>
-<p>Mein Datensatz: https://doi.org/10.4232/1.13468</p>
+</div>
+</div>
+</div>
+<div class="callout callout-note no-icon callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<p><strong>Bereitstellung</strong></p>
+</div>
+<div class="callout-content">
 <ul>
-<li>Roles of a codebook
+<li>Aufbereitung &amp; Kontextualisierung von Forschungsdaten</li>
+<li>Speicherung auf <strong>Forschungsdatenzentren</strong></li>
+<li><strong>primär</strong> der Zweck der Nachnutzung</li>
+</ul>
+</div>
+</div>
+</div>
+<p>Anforderung bei Drittmittel <span class="citation" data-cites="bmbf.2021a europeancommission.2017c dfg.2015 dfg.2022">(<a href="#/credit" role="doc-biblioref" onclick="">BMBF, 2021</a>; <a href="#/credit" role="doc-biblioref" onclick="">Commission, 2017</a>; <a href="#/credit" role="doc-biblioref" onclick="">DFG, 2022</a>; <a href="#/credit" role="doc-biblioref" onclick="">DFG, 2015</a>)</span></p>
+<div class="callout callout-note no-icon callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<p><strong>Nachnutzung</strong></p>
+</div>
+<div class="callout-content">
 <ul>
-<li>high-level summary of the data (meaningful labels)
-<ol type="1">
-<li>easier to discover errors, miscoded missing values, oddly shaped distributions -&gt; allowing data creators to clean their data sets more efficiently and reproducibly</li>
-<li>helps to explain an unfamiliar data set to researchers who want to reproduce analyses or reuse the data -&gt; ideally combined with text explaining the structure and nature of the data set -&gt; fewer errors resulting from analyzing a data set without understanding measurement specifics</li>
-</ol></li>
-<li>stamndardization
+<li>Reanalyse, Replikation, Sekundärdatenanalyse</li>
+<li>Forschungssynthesen</li>
+<li>Einsatz in der Lehre</li>
+</ul>
+</div>
+</div>
+</div>
+<p><span class="citation" data-cites="dgfe.2017">(<a href="#/credit" role="doc-biblioref" onclick="">DGfE, 2017</a>)</span></p>
+<aside class="notes">
+<ul>
+<li>entsprechend findet eine geringere Aufbereitung und Dokumentation der Daten statt</li>
+<li>Nachnutzung: Reanalyse (auch andere Modelle können getestet werden)</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="nachnutzung-warum" class="slide level2">
+<h2>Nachnutzung | Warum</h2>
+<ul>
+<li>Ressourcenschonung</li>
+<li>Analysepotantial oftmals nicht ausgeschöpft</li>
+<li>Forschungssynthesen (z.B. meta-analytic SEM)</li>
+</ul>
+<aside class="notes">
+<p>Überfrachtungen bestimmter Forschungsfelder vermeiden (vulnerable Gruppen)</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="wie-hilft-ein-codebook" class="title-slide slide level1 center">
+<h1>Wie hilft ein Codebook?</h1>
+
+</section>
+<section id="fair-data-herstellen" class="slide level2">
+<h2>FAIR Data herstellen</h2>
+<div class="columns">
+<div class="column" style="width:25%;">
+<div class="blueTop">
+<strong>F</strong>indable
+</div>
+<div class="blueBottom">
+
+</div>
+</div><div class="column" style="width:25%;">
+<div class="blueTop">
+<strong>A</strong>ccessible
+</div>
+<div class="blueBottom">
+
+</div>
+</div><div class="column" style="width:25%;">
+<div class="blueTop">
+<strong>I</strong>nteroperable
+</div>
+<div class="blueBottom">
+
+</div>
+</div><div class="column" style="width:25%;">
+<div class="blueTop">
+<strong>R</strong>eusable
+</div>
+<div class="blueBottom">
+
+</div>
+</div>
+</div>
+</section>
+<section id="fair-data-herstellen-1" class="slide level2">
+<h2>FAIR Data herstellen</h2>
+<div class="columns">
+<div class="column" style="width:25%;">
+<div class="blueTop">
+<strong>F</strong>indable
+</div>
+<div class="blueBottom">
+F2. Daten werden mit umfangreichen Metadaten beschrieben<br><br> <em>“Forscherinnen und Forscher sollten jeden Datensatz sorgfältig und möglichst vollständig mit Metadaten beschreiben.”</em>
+</div>
+</div><div class="column" style="width:25%;">
+<div class="blueTop">
+<strong>A</strong>ccessible
+</div>
+<div class="blueBottom">
+
+</div>
+</div><div class="column" style="width:25%;">
+<div class="blueTop">
+<strong>I</strong>nteroperable
+</div>
+<div class="blueBottom">
+
+</div>
+</div><div class="column" style="width:25%;">
+<div class="blueTop">
+<strong>R</strong>eusable
+</div>
+<div class="blueBottom">
+R1. (Meta)Daten sind detailliert beschrieben und enthalten präzise, relevante Attribute<br><br> <em>“Eine gute Beschreibung von Daten und Metadaten sorgt dafür, dass die Daten für die zukünftige Forschung wiederverwendet werden können”</em>
+</div>
+</div>
+</div>
+<p><span class="citation" data-cites="wilkinsonetal.2016">(<a href="#/credit" role="doc-biblioref" onclick="">Wilkinson et al., 2016</a>)</span></p>
+<p>TIB-Blog: <a href="https://blogs.tib.eu/wp/tib/2017/09/12/die-fair-data-prinzipien-fuer-forschungsdaten/">Rolle der Wissenschaftler*innen</a><span class="citation" data-cites="kraft.2017a">(<a href="#/credit" role="doc-biblioref" onclick="">Kraft, 2017</a>)</span></p>
+</section>
+<section id="codebook" class="slide level2">
+<h2>Codebook</h2>
+<ul>
+<li>provides the metadata
+<ul>
+<li>Erklärt Variablen- und Wertelabels</li>
+<li>high level summary der Daten</li>
+</ul>
+-&gt; ermöglicht Nachvollziehbarkeit der Daten -&gt; verbessert Reproduzierbarkeit und Nachnutzung</li>
+<li>Vorteil für Bereitstellende: easier to discover errors, miscoded missing values, oddly shaped distributions -&gt; allowing data creators to clean their data sets more efficiently and reproducibly</li>
+<li>nicht zu unterschätzen: Standardisierung
 <ol type="1">
 <li>easier for researchers to make sense of data (but they can make do)</li>
 <li>search engines rely on standardized metadata</li>
 </ol></li>
-</ul></li>
+</ul>
+</section>
+<section id="codebook-package" class="slide level2">
+<h2>codebook package</h2>
+<ul>
 <li>codebook package
 <ul>
 <li>exportable to html &amp; pdf</li>
@@ -505,52 +643,23 @@ Jürgen Schneider
 <li>meta-analyses</li>
 <li>relevant unpublished effect sizes could be discovered more easily</li>
 </ul></li>
+</ul>
+</section>
+<section id="punkte" class="slide level2">
+<h2>Punkte</h2>
+<ul>
+<li>Wie Codebook dabei hilft Reproduzierbarkeit &amp; Nachnutzung zu fördern
+<ul>
+<li>Analysen und Datensatz (auch jenseits der RDA) besser nachvollziehen</li>
+<li>Datensatz mit / ohne codebook (within?)</li>
+</ul></li>
+<li>Hands on</li>
+</ul>
+<p>Mein Datensatz: https://doi.org/10.4232/1.13468</p>
+<ul>
 <li>maximales codebook zeigen</li>
 <li>schrittweise ergänzen</li>
 </ul>
-</section>
-<section id="slide-with-a-pause" class="slide level2">
-<h2>Slide with a pause</h2>
-<p>content before the pause</p>
-<div class="fragment">
-<p>content after the pause</p>
-
-</div>
-<aside><div>
-<p>Some additional commentary of more peripheral interest.</p>
-</div></aside></section>
-<section id="quarto" class="slide level2">
-<h2>Quarto</h2>
-<p>Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <a href="https://quarto.org/docs/presentations/" class="uri">https://quarto.org/docs/presentations/</a>.</p>
-</section>
-<section id="bullets" class="slide level2 scrollable">
-<h2>Bullets</h2>
-<p>When you click the <strong>Render</strong> button a document will be generated that includes:</p>
-<ul>
-<li>Content authored with markdown</li>
-<li>Output from executable code</li>
-<li>point3</li>
-<li>point4</li>
-<li>point4</li>
-<li>point4</li>
-<li>point4</li>
-<li>point4</li>
-<li>point4</li>
-<li>point4</li>
-<li>point4</li>
-<li>point4</li>
-<li>point4</li>
-<li>point4</li>
-</ul>
-</section>
-<section id="code" class="slide level2">
-<h2>Code</h2>
-<p>When you click the <strong>Render</strong> button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
-</div>
 </section></section>
 <section id="credit" class="title-slide slide level1 smaller scrollable">
 <h1>Credit</h1>
@@ -566,11 +675,32 @@ Artner, R., Verliefde, T., Steegen, S., Gomes, S., Traets, F., Tuerlinckx, F., &
 <div id="ref-barba.2018" class="csl-entry" role="doc-biblioentry">
 Barba, L. A. (2018). <em>Terminologies for <span>Reproducible Research</span></em> (No. arXiv:1802.03311). <span>arXiv</span>. <a href="https://arxiv.org/abs/1802.03311">https://arxiv.org/abs/1802.03311</a>
 </div>
+<div id="ref-bmbf.2021a" class="csl-entry" role="doc-biblioentry">
+BMBF. (2021). <span>Bekanntmachung. Richtlinie zur Förderung von Projekten zum Thema Nachnutzung und Management von Forschungsdaten an Fachhochschulen</span>. In <em>Bundesministerium für Bildung und Forschung - BMBF</em>. https://www.bmbf.de/bmbf/shareddocs/bekanntmachungen/de/2021/08/2021-08-17-Bekanntmachung-Fachhochschulen.html.
+</div>
+<div id="ref-europeancommission.2017c" class="csl-entry" role="doc-biblioentry">
+Commission, E. (2017). <em>H2020 <span>Programme</span>. <span>Annotated Model Grant Agreement</span></em>.
+</div>
+<div id="ref-dfg.2022" class="csl-entry" role="doc-biblioentry">
+DFG. (2022). <span>Konkretisierung der Anforderungen zum Umgang mit Forschungsdaten in Förderanträgen</span>. <em>Information für die Wissenschaft</em>, <em>25</em>.
+</div>
+<div id="ref-dfg.2015" class="csl-entry" role="doc-biblioentry">
+DFG. (2015). <em>Leitlinien zum <span>Umgang</span> mit <span>Forschungsdaten</span></em>.
+</div>
+<div id="ref-dgfe.2017" class="csl-entry" role="doc-biblioentry">
+DGfE. (2017). <em>Stellungnahme der <span>DGfE</span> zur <span>Archivierung</span>, <span>Bereitstellung</span> und <span>Nachnutzung</span> qualitativer <span>Forschungsdaten</span> in der <span>Erziehungswissenschaft</span></em>.
+</div>
 <div id="ref-erringtonetal.2021" class="csl-entry" role="doc-biblioentry">
 Errington, T. M., Denis, A., Perfito, N., Iorns, E., &amp; Nosek, B. A. (2021). Challenges for assessing replicability in preclinical cancer biology. <em>eLife</em>, <em>10</em>, e67995. <a href="https://doi.org/10.7554/eLife.67995">https://doi.org/10.7554/eLife.67995</a>
 </div>
+<div id="ref-kraft.2017a" class="csl-entry" role="doc-biblioentry">
+Kraft, A. (2017). <span>Die FAIR Data Prinzipien für Forschungsdaten</span>. In <em>TIB-Blog</em>.
+</div>
 <div id="ref-nas.2019" class="csl-entry" role="doc-biblioentry">
 NAS (Ed.). (2019). <em>Reproducibility and replicability in science</em>. <span>National Academies Press</span>.
+</div>
+<div id="ref-wilkinsonetal.2016" class="csl-entry" role="doc-biblioentry">
+Wilkinson, M. D., Dumontier, M., Aalbersberg, Ij. J., Appleton, G., Axton, M., Baak, A., Blomberg, N., Boiten, J.-W., da Silva Santos, L. B., Bourne, P. E., Bouwman, J., Brookes, A. J., Clark, T., Crosas, M., Dillo, I., Dumon, O., Edmunds, S., Evelo, C. T., Finkers, R., … Mons, B. (2016). The <span>FAIR Guiding Principles</span> for scientific data management and stewardship. <em>Scientific Data</em>, <em>3</em>(1), 160018. <a href="https://doi.org/10.1038/sdata.2016.18">https://doi.org/10.1038/sdata.2016.18</a>
 </div>
 </div>
 </section>
