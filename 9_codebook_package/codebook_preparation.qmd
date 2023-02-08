@@ -70,7 +70,9 @@ Auch hier loht es sich eine neue RStudio Version (z. B. `2022.12.0`) installiert
 ## codebook package
 
 Bitte installieren Sie die **Development-Version** des Codebook Packages!  
-Hier sind schon einige Bugs gefixed, die in der CRAN-Version noch drin sind.
+Hier sind schon einige Bugs gefixed, die in der CRAN-Version noch drin sind.  
+  
+Oftmals vermeidet es Installationsprobleme, wenn Sie die **Installation in R** (und nicht RStudio) **vornehmen**. Je nach Ihren gewälten Einstellungen, werden beim Start von RStudio nämlich bereits Pakete geladen mit denen dann Konflikte entstehen könnten.
 
 ```{r}
 install.packages("remotes")
