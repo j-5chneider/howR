@@ -1,0 +1,114 @@
+---
+title: "Workshop: Codebook package"
+subtitle: "Preparation"
+author:
+  - name: "Jürgen Schneider"
+    email: "ju.schneider@dipf.de"
+    affiliation: "DIPF"
+    correspondence: true
+date: "`r Sys.Date()`" # inserts the date of compiling
+editor: source
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false # true will prevent embed-resources
+  eval: false
+format: 
+  html:
+    theme: solar
+    fontsize: 0.85em
+    toc: true
+    toc-location: left
+    toc-depth: 4
+    embed-resources: true # will make standalone html file
+    code-link: true
+---
+
+\
+\
+\
+
+# Softwarevoraussetzungen
+
+Moin! Damit wir beim Workshop flüssig starten können, würde ich Sie bitten **folgende Vorbereitungen** zu treffen:
+
+## R
+
+Haben Sie eine **aktuelle R-Version** installiert?  
+
+* R 4.2 oder jünger: gut
+* R 4.0: auch ok
+* R 3.6 oder älter: lieber updaten
+
+::: {.panel-tabset}
+
+### Windows
+
+Beim Update unter **Windows** hilt Ihnen das package `{installr}`. Führen Sie diesen Code aus und Sie werden durch die Installation geleitet, bei der Sie alle Packages behalten können (und nicht neu installieren müssen):
+
+```{r}
+install.packages('installr')
+installr::updateR()
+```
+
+
+### Mac
+
+Meines Wissens funktioniert dieses package nicht unter **Mac**. `¯\_(ツ)_/¯`  
+Aber no worries, hier müsste das Vorgehen aus dem folgenden [Stackoverflow post](https://stackoverflow.com/questions/13656699/update-r-using-rstudio/17625368#17625368) helfen.
+
+:::
+
+
+
+## RStudio
+
+Auch hier loht es sich eine neue RStudio Version (z. B. `2022.12.0`) installiert zu haben!
+
+
+## codebook package
+
+Bitte installieren Sie die **Development-Version** des Codebook Packages!  
+Hier sind schon einige Bugs gefixed, die in der CRAN-Version noch drin sind.
+
+```{r}
+install.packages("remotes")
+remotes::install_github("rubenarslan/codebook")
+```
+
+\
+\
+\
+
+# (Lern-) Output maximieren
+
+## Eigenen Datensatz mitbringen
+
+Wenn Sie einen eigenen **Datensatz** zum Workshop **mitbringen**, laufen Sie im Idealfall mit einem fertigen **Codebook** aus dem Workshop raus. Hierfür bekommen Sie im Hands-on Teil des Workshops Zeit.  
+
+* __Im besten Fall__ enthält dier Datensatz bereits Metadaten. Das ist beispielsweise bei einem SPSS-Datensatz (SAV-Datei) der Fall, bei dem Sie bereits die Variablenansicht ausgefüllt haben. Das kann aber genauso der Fall sein bei Datensätzen, die Sie aus Survey-Tools exportieren/downloaden.
+* Das codebook package funktioniert aber genauso mit CSV oder XLSX Dateien. Hier muss man einfach etwas nacharbeiten.
+
+Bringen Sie mit was Sie haben, wir können sicher damit arbeiten.
+
+\
+\
+
+## Vorerfahrung in RMarkdown
+
+Das codebook package arbeitet mit RMarkdown. Etwas Vorerfahrung wäre also nicht schlecht.
+
+::: {.panel-tabset}
+
+### kurzes Intro-Video
+
+Wenn Sie noch nie etwas von RMarkdown gehört haben, schauen Sie sich dieses kurze Intro an: [youtu.be/DNS7i2m4sB0](https://youtu.be/DNS7i2m4sB0)
+
+
+
+### Cheat Sheet zum nachschauen
+
+Wenn Sie lieber alles auf einem Blick haben möchten, schauen Sie in das [Cheat Sheet für RMarkdown](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown-2.0.pdf).
+
+:::
