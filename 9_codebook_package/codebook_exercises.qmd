@@ -422,6 +422,68 @@ knitr::opts_chunk$set(
 
 # Weitere Optionen
 
+## Daten in das HTML einbetten
+
+Verwenden Sie das `xfun` package, um Ihre Daten direkt in das HTML einzubetten. Nutzer*innen können die Daten aus dem HTML heraus herunterladen (auch ohne Internetverbindung). Wenn Sie die HTML Datei weitergeben, sind die Daten also schon enthalten! Beispiel:
+
+Click here to download the `r xfun::embed_file(here('www/never.gif'), text = "qualitative data")` on the topic of never giving up.
+
+Hier habe ich die `embed_file()` Funktion inline (also im Fließtext) verwendet:  
+  
+"...download the `` `r '\x60r xfun::embed_file("www/never.gif", text = "qualitative data")\x60'` `` on the topic..."
+\
+
+## Metadaten über gesamten Datensatz
+
+Genau wie Metadaten für einzelne Variablen definiert werden, können auf Ebene des gesamten Datensatzes Metadaten definiert werden. Diese geben Auskunft über Aspekte, wie 
+
+* Name des Datensatzes `name`
+* Beschreibung des Datensatzes `description`
+* Erhebungszeitraum `temporalCoverage`
+* Lizenz (normalerweise URL zur Lizenz) `license`
+* Persistenter Identifier (normalerweise DOI) `identifier`
+* Name der\*des Urheber*in `creator`
+* URL (z. B. können Kontaktinformationen durch Link auf die ORCID hinterlegt werden) `url`
+* Publikationsdatum `datePublished`
+
+
+```{r}
+                                # DO: Hier können jeweils Informationen ergänzt werden
+metadata(codebook_data)$name <- "Data of project SE-PRIME"
+metadata(codebook_data)$description <- "Investigation of self-efficacy in ..."
+metadata(codebook_data)$temporalCoverage <- "Apr 2022 - Feb 2023" 
+metadata(codebook_data)$license <- "https://creativecommons.org/licenses/by/4.0/"
+metadata(codebook_data)$identifier <- "https://doi.org/10.1080/00461520.2021.1886103"
+metadata(codebook_data)$creator <- "Erika Musterfrau"
+metadata(codebook_data)$url <- "https://orcid.org/0000-0002-7867-2101"
+metadata(codebook_data)$datePublished <- "2023-02-13"
+```
+
+\
+
+## Datensatz mit Metadaten exportieren
+
+Bevor Sie das Codebook mit `codebook(codebook_data)` erzeugen, können Sie den Datensatz mit allen Metadaten exportieren. Wählen Sie hierzu ein Dateiformat aus, das es erlaubt Metadaten mitzuspeichern. Hierzu gehört das
+
+* R data structure Format .rds
+* SPSS data file Format .sav
+
+Für das .rds-Format spricht, dass es auf einer Open Source Software aufbaut und somit besser accessible ist.
+
+__in .rds speichern__
+
+```{r}
+rio::export(codebook_data, "meinDatensatz.rds") # DO: Name der Datei ergänzen
+```
+
+__in .sav speichern__
+
+```{r}
+rio::export(codebook_data, "meinDatensatz.sav") # DO: Name der Datei ergänzen
+```
+
+\
+
 ## Layout Themes
 
 Wollen Sie einen anderen Look für das Dokument ausprobieren? Eine Auswahl an Themes finden Sie in der [Theme Gallery (Link)](https://www.datadreaming.org/post/r-markdown-theme-gallery/).  
@@ -441,17 +503,6 @@ output:
     theme: cerulean        # DO: Tragen Sie hier den Namen des Themes ein
 ---
 ```
-\
-
-## Daten in das HTML einbetten
-
-Verwenden Sie das `xfun` package, um Ihre Daten direkt in das HTML einzubetten. Nutzer*innen können die Daten aus dem HTML heraus herunterladen (auch ohne Internetverbindung). Wenn Sie die HTML Datei weitergeben, sind die Daten also schon enthalten! Beispiel:
-
-Click here to download the `r xfun::embed_file(here('www/never.gif'), text = "qualitative data")` on the topic of never giving up.
-
-Hier habe ich die `embed_file()` Funktion inline (also im Fließtext) verwendet:  
-  
-"...download the `` `r '\x60r xfun::embed_file("www/never.gif", text = "qualitative data")\x60'` `` on the topic..."
 \
 \
 
