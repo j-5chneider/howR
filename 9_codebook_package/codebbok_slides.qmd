@@ -82,7 +82,7 @@ Reproduzierbarkeit und Replizierbarkeit zwischen Disziplinen unterschiedlich ver
 \
 \
 
-**@artneretal.2021**: **232** scientific claims aus **46** Zeitschriftenartikel
+<span style="float: left !important; font-size: 1.43em">**@artneretal.2021**</span>: **232** scientific claims aus **46** Zeitschriftenartikel
 
 
 ```{r}
@@ -166,6 +166,10 @@ Anforderung bei Drittmittel [@bmbf.2021a; @europeancommission.2017c; @dfg.2015; 
 
 ## FAIR Data herstellen
 
+![](www/data-publication.jpg){width=50%}
+
+## FAIR Data herstellen
+
 
 :::: {.columns}  
 ::: {.column width="25%"}
@@ -215,43 +219,218 @@ Anforderung bei Drittmittel [@bmbf.2021a; @europeancommission.2017c; @dfg.2015; 
 
 [@wilkinsonetal.2016]
 
-TIB-Blog: [Rolle der Wissenschaftler*innen](https://blogs.tib.eu/wp/tib/2017/09/12/die-fair-data-prinzipien-fuer-forschungsdaten/)[@kraft.2017a]
+\
+\
+\
+\
+
+`r fa(name = "lightbulb")` TIB-Blog: [Rolle der Wissenschaftler*innen](https://blogs.tib.eu/wp/tib/2017/09/12/die-fair-data-prinzipien-fuer-forschungsdaten/)[@kraft.2017a]
 
 
 ## Codebook
 
-* provides the metadata
-  - Erklärt Variablen- und Wertelabels
-  - high level summary der Daten
-
-  -> ermöglicht Nachvollziehbarkeit der Daten (auch für eigene Arbeitsgruppe)  
-  -> verbessert Reproduzierbarkeit und Nachnutzung
-* Vorteil für Bereitstellende: easier to discover errors, miscoded missing values, oddly shaped distributions
-  -> allowing data creators to clean their data sets more efficiently and reproducibly
+* Ermöglicht Metadaten<br />
+  `r fa(name = "long-arrow-alt-right")` Erklärt Variablen- und Wertelabels<br /><br /><br />
+* Überblick über Merkmale der Items / Skalen<br />
+  `r fa(name = "long-arrow-alt-right")` Nachvollziehbarkeit der Daten (auch für eigene Arbeitsgruppe)  <br />
+  `r fa(name = "long-arrow-alt-right")` Data Cleaning & Qualitätskontrolle (Codierfehler, unerwartete Verteilung, ...)<br /><br /><br />
 * nicht zu unterschätzen: Standardisierung
-  (1) easier for researchers to make sense of data (but they can make do)
-  (2) search engines rely on standardized metadata
+
+
+::: {.notes}
+* __Übersicht__: verbessert Reproduzierbarkeit und Nachnutzung
+* __Nachvollziehbarkeit__: Inhalt und Struktur des Datensatzes transparenter machen -> leichter zu beurteilen, ob ich Daten wiederverwenden möchte
+* __Standardisierung__: einfachere Nachvollziehbarkeit; Suchmaschinen brauchen Standards
+:::
+
+# Das codebook package
+
+## codebook package
+
+:::: {.columns}  
+::: {.column width="100%"}
+
+* stellt R Markdown Template & R-Funktionen bereit
+* exportierbar in HTML, PDF, ...
+* Idealerweise in RStudio verwenden
+
+:::
+::::
+
+:::: {.columns}  
+::: {.column width="40%"}
+![](www/codebook_rmd.jpg)
+:::
+::: {.column width="5%"}
+\
+\
+\
+\
+\
+\
+
+`r fa(name = "long-arrow-alt-right", height="40px")`
+:::
+::: {.column width="55%"}
+![](www/codebook_html.jpg)
+:::
+::::
+
+## codebook package
+
+__Das exportierte Codebook:__
+
+* enthält Metadaten der Daten (Variablenlabels, Wertelabels, Beschreibung, ...)
+* enthält Datenzusammenfassungen auf Item- & Skalenebene
+* ist maschinenlesbar ([Beispiel](https://datasetsearch.research.google.com/))
 
 
 ## codebook package
 
-* codebook package
-  - exportable to html & pdf
-  - includes: metadata (variable names, value names); data summaries; 
-  - making data-set contents and structure more transparent -> easier to judge if I want to reuse data
-  long term
-  - machine readable
-  - meta-analyses
-  - relevant unpublished effect sizes could be discovered more easily
+Keine Lust auf R? Es gibt auch ein **Web-Interface**: [codebook.formr.org](https://codebook.formr.org)
 
-## Punkte
+\
+
+![](www/codebook_web.jpg){width=70%}
 
 
-* Wie Codebook dabei hilft Reproduzierbarkeit & Nachnutzung zu fördern
-  - Analysen und Datensatz (auch jenseits der RDA) besser nachvollziehen
-  - Datensatz mit / ohne codebook (within?)
-* Hands on
+## codebook package
 
+\
+
+Automatismus besonders gut mit **Datensätzen, die Metadaten beinhalten**.
+
+\
+\
+
+. . .
+
+:::: {.columns}  
+::: {.column width="45%"}
+![](www/formr.jpg)
+:::
+
+::: {.column width="15%"}
+<br /><br /><br /><br />__+ {codebook} =__
+:::
+
+::: {.column width="35%"}
+![](www/mind-blown.gif)
+:::
+::::
+
+:::: {.columns}  
+::: {.column width="43%"}
+[@arslan.2019]
+:::
+
+::: {.column width="15%"}
+[@arslanetal.2020]
+:::
+
+::: {.column width="35%"}
+:::
+::::
+
+
+## codebook package
+__R Markdown in aller Kürze__
+
+* R Markdown: R package und Dateiformat, um Dokumente aus R heraus zu generieren
+* Ist die Basis für codebook-Dateien
+* Hauptsächlich durch 3 Elemente aufgebaut
+
+:::: {.columns}  
+::: {.column width="45%"}
+![](www/codebook_rmd.jpg)
+:::
+
+::: {.column width="55%"}
+:::
+::::
+
+## codebook package
+__R Markdown in aller Kürze__
+
+* R Markdown: R package und Dateiformat, um Dokumente aus R heraus zu generieren
+* Ist die Basis für codebook-Dateien
+* Hauptsächlich durch 3 Elemente aufgebaut
+
+:::: {.columns}  
+::: {.column width="45%"}
+![](www/codebook_rmd_yaml.jpg)
+:::
+
+::: {.column width="55%"}
+__YAML__  
+Definition dokumentübergreifender Eigenschaften
+
+* Titel, Autor*in, ... des Dokuments
+* Welches Outputformat?
+* Welches Theme?
+* Welcher Zitationsstil
+* ...
+  
+:::
+::::
+
+
+## codebook package
+__R Markdown in aller Kürze__
+
+* R Markdown: R package und Dateiformat, um Dokumente aus R heraus zu generieren
+* Ist die Basis für codebook-Dateien
+* Hauptsächlich durch 3 Elemente aufgebaut
+
+:::: {.columns}  
+::: {.column width="45%"}
+![](www/codebook_rmd_txt.jpg)
+:::
+
+::: {.column width="53%"}
+__Text/Bilder/Videos/...__  
+Formatierbarer Text
+
+* Fett/kursiv
+* Einbinden von Links
+* Einbinden von Bildern/Videos
+* ...
+  
+:::
+::::
+
+## codebook package
+__R Markdown in aller Kürze__
+
+* R Markdown: R package und Dateiformat, um Dokumente aus R heraus zu generieren
+* Ist die Basis für codebook-Dateien
+* Hauptsächlich durch 3 Elemente aufgebaut
+
+:::: {.columns}  
+::: {.column width="45%"}
+![](www/codebook_rmd_code.jpg)
+:::
+
+::: {.column width="53%"}
+__R Code__  
+R Code in Chunks oder "in line".
+
+* Ermöglicht Input von Code
+* Führt Code aus und zeigt Output an
+* Zahlreiche Einstellungsmöglichkeiten, z. B. ob Output angezeigt werden soll
+* Code Chunks durch `` `r '\x60\x60\x60{r}'` `` ("backticks") begonnen und `` `r '\x60\x60\x60'` `` beendet
+* Inline Code durch `` `r '\x60r 2+2\x60'` `` ergibt: `r 2+2`
+* ...
+
+:::
+::::
+
+# Hands on
+
+
+## Data
+
+Burkart: https://doi.org/10.17605/OSF.IO/4K56P
 Mein Datensatz: https://doi.org/10.4232/1.13468
 
 * maximales codebook zeigen
@@ -265,7 +444,9 @@ Mein Datensatz: https://doi.org/10.4232/1.13468
 
 
 # Credit
-Icons by Font Awesome CC BY 4.0
 
 Foto title page by <a href="https://unsplash.com/@harlynkingm?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Max Harlynking</a> on <a href="https://unsplash.com/de/fotos/PreLE0ZJVQ0?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
   
+Comic "Publications and Data" by Auke Herrema, Ms. Gerry, CC-BY
+  
+Icons by Font Awesome CC-BY 4.0
