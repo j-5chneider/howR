@@ -128,6 +128,10 @@ Schauen Sie Ihr Codebook genau an und vergleichen Sie es mit dem [Codebook aus e
 3. Zeigen Sie sich gegenseitig ihre Codebooks und sprechen Sie über die Unterschiede und was Sie noch ergänzen wollen.
 :::
 
+
+__Fertig?__  
+Lassen Sie es mich wissen: [__pollev.com/js123__](https://pollev.com/js123)
+
 \
 \
 
@@ -176,6 +180,9 @@ var_label(codebook_data) <- dict %>%
 
 
 :::
+
+__Fertig?__  
+Lassen Sie es mich wissen: [__pollev.com/js123__](https://pollev.com/js123)
 
 \
 \
@@ -243,6 +250,9 @@ codebook_data <- codebook_data %>%
 
 :::
 
+__Fertig?__  
+Lassen Sie es mich wissen: [__pollev.com/js123__](https://pollev.com/js123)
+
 \
 \
 
@@ -282,6 +292,8 @@ codebook_data <- codebook_data %>%
 
 :::
 
+__Fertig?__  
+Lassen Sie es mich wissen: [__pollev.com/js123__](https://pollev.com/js123)
 
 \
 \
@@ -481,6 +493,14 @@ __in .sav speichern__
 ```{r}
 rio::export(codebook_data, "meinDatensatz.sav") # DO: Name der Datei ergänzen
 ```
+
+\
+
+## Einführung ins Codebook
+
+Sie können den obersten Teil des Codebooks selbst gestalten. Es empfielt sich hier evtl. eine kurze Einführung in das Projekt oder den Datensatz bereitzustellen.  
+  
+Bearbeiten Sie hierzu den Fließtext nach dem YAML-Teil. Welche Formatierungsoptionen Sie in R Markdown haben, können Sie im [R Markdown Cheat Sheet (Link)](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown-2.0.pdf) nachschauen.
 
 \
 
