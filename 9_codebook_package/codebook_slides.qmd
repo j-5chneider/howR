@@ -5,6 +5,7 @@ title-slide-attributes:
   data-background-image: ../www/transparent.jpg
   data-background-size: cover
   data-background-opacity: "0.3"
+  notes: "test"
 author: "<b>Jürgen Schneider</b>"
 date: last-modified # today
 date-format: "DD MMMM YYYY"
@@ -16,9 +17,11 @@ format:
       smaller: true
       scrollable: true
       embed-resources: true
+      slide-number: true
 bibliography: ../www/references.bib
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
 ---
+
 
 ```{r setup, include=FALSE}
 # knitr::opts_chunk$set(echo = FALSE,
@@ -45,9 +48,21 @@ __Folien, Übungen, ...__
 __ein paar Fragen__  
 [**cbk-wrk.formr.org**](https://cbk-wrk.formr.org/)
 
+::: {.notes}
+* Organisatorisch: Hier __finden Sie__ alles zum heutigen Workshop<br />-> [__Chat kopieren__] + [__öffnen__]
+* Mich interessiert Ihr Vorwissen & was in der Vorbereitung geklappt hat<br />-> ein paar Fragen [__Chat kopieren__]<br />-> dient auch als __Codebook-Beispiel__
+:::
+
+
 ## Disclaimer
 
 ![](www/ruben_me.jpg)
+
+::: {.notes}
+* Codebook-package nicht von mir
+* Enthusiastischer User der Produkte von Ruben Arslan
+* Kann evtl. nicht alle Fragen beantworten<br />-> schreibe sie aber gerne auf und frage ihn
+:::
 
 ## Heutiger Workshop
 
@@ -85,6 +100,12 @@ Reproduzierbarkeit und Replizierbarkeit zwischen Disziplinen unterschiedlich ver
 :::
 
 
+::: {.notes}
+* Was meine ich, wenn ich von Reproduzierbarkeit spreche?<br />-> immer wieder auf unterschiedliche Verwendungen gestoßen
+* Macht auch Sinn: ...
+:::
+
+
 ## Reproduzierbarkeit
 #### Warum?
 
@@ -99,10 +120,9 @@ Reproduzierbarkeit und Replizierbarkeit zwischen Disziplinen unterschiedlich ver
 * Eigene Nachvollziehbarkeit des Datensatzes & der Analysen
 
 ::: {.notes}
-* "To evaluate a scientific claim one needs access to the evidence supporting the claim"
-  - "tendency of authors to report what they perceive to be important"
-  - Transparenz: Lesende können selbst beurteilen, wie sie die evidenz einschätzen
-* 
+* "scientific claims" können dann besonders gut evaluiert werden, wenn die Evidenz auf der sie beruhen überprüft werden können
+* Tendenz von Authoren das zu berichten, was sie als wichtig empfinden
+* Transparenz: Lesende können selbst beurteilen, wie sie die Evidenz einschätzen
 :::
 
 ## Reproduzierbarkeit
@@ -142,9 +162,25 @@ ggplot(artner, aes(x=what, y=count)) +
 ```
 
 ::: {.notes}
-163 (70%) of the 232 (not in a strict sense (59%), e.g. df) (only for 52% if procedure in the paper was followed)
+* 163 (70%) of the 232
+* in a __strict__ sense (59%), e.g. __df__
+* 52% if procedure in the paper was followed
 :::
 
+
+## Reproduzierbarkeit
+#### Optimierungspotential
+
+\
+\
+
+<span style="float: left !important; font-size: 1.43em">**@artneretal.2021**</span>: **232** scientific claims aus **46** Zeitschriftenartikel
+<img src="www/artner.jpg" style="border:1px solid darkgrey; width: 90%;" />
+
+::: {.notes}
+* Wissenschaftler*innen werden selten so deutlich
+* kann mir vorstellen, wie angry sie waren
+:::
 
 ## Nachnutzung
 ### Definition
@@ -207,6 +243,11 @@ Anforderung bei Drittmittel [@bmbf.2021a; @europeancommission.2017c; @dfg.2015; 
 
 ![](www/data-publication.jpg){width=50%}
 
+::: {.notes}
+* Der __Fokus__ in der Wissenschaft aktuell immer noch auf Paper-Publications.
+* Auch wenn Daten geteilt werden, sind sie oftmals nicht "FAIR"
+:::
+
 ## FAIR Data herstellen
 
 
@@ -264,6 +305,11 @@ Anforderung bei Drittmittel [@bmbf.2021a; @europeancommission.2017c; @dfg.2015; 
 \
 
 `r fa(name = "lightbulb")` TIB-Blog: [Rolle der Wissenschaftler*innen](https://blogs.tib.eu/wp/tib/2017/09/12/die-fair-data-prinzipien-fuer-forschungsdaten/)[@kraft.2017a]
+
+::: {.notes}
+* Metadaten auf der Ebene des gesamten Datensatzes<br />-> _Findable_
+* Metadaten auf der Ebene der einzelnen Variablen / Ausprägungen der Var<br />-> Reusable
+:::
 
 
 ## Codebook
@@ -372,6 +418,11 @@ Automatismus besonders gut mit **Datensätzen, die Metadaten beinhalten**.
 ::: {.column width="35%"}
 :::
 ::::
+
+::: {.notes}
+* Codebook produzieren <br />+ Ergebnisse mit Teilnehmenden durchsprechen
+* Installationsprobleme: Gleich ein Raum mit mir
+:::
 
 
 ## codebook package
