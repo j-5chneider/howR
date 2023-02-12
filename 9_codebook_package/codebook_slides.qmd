@@ -436,7 +436,9 @@ Formatierbarer Text
 * Einbinden von Links
 * Einbinden von Bildern/Videos
 * ...
-  
+
+[R Markdown Cheat Sheet (Link)](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown-2.0.pdf)
+
 :::
 ::::
 
@@ -467,6 +469,9 @@ R Code in Chunks oder "in line".
 ::::
 
 # Hands on
+
+
+Wenn fertig mit Aufgabe in Kleingruppen: [__pollev.com/js123__](https://pollev.com/js123)
 
 
 # {-}
