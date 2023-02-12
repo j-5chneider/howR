@@ -10,7 +10,7 @@
 
 .date {
   font-size: .7em;
-  color: #cecece;
+  /*color: #6ca5d940;*/
 }
 
 .blueTop, .blueBottom {
@@ -25,4 +25,10 @@
 
 .blueBottom {
     background-color: #6ca5d940;
+}
+
+.citation {
+  float: right;
+  opacity: .6;
+  font-size: .7em;
 }
