@@ -1,0 +1,169 @@
+---
+title: "Untitled"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+# Website and Exercises under...
+
+* Original website: [thomvolker.github.io/OSWS_Synthetic/](https://thomvolker.github.io/OSWS_Synthetic/)
+* If this is down, this is a fork: [github.com/j-5chneider/Synthetic_Data_mice](https://github.com/j-5chneider/Synthetic_Data_mice)
+
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+heart_failure <- rio::import("https://thomvolker.github.io/OSWS_Synthetic/data/heart_failure.RDS")
+
+library(mice)      # to create the synthetic data
+library(ggmice)    # to make visualizations of the synthetic data
+library(ggplot2)   # required when using ggmice
+library(patchwork) # to stitch multiple figures together
+library(psych)     # to obtain descriptive statistics
+library(purrr)     # to work with multiply imputed synthetic datasets
+library(tidyverse) # to do some data wrangling
+library(synthpop)  # to assess the utility of our synthetic data
+```
+
+```{r}
+where <- make.where(heart_failure, "all")
+
+parametric <- make.method(heart_failure, 
+                          where = where, 
+                          defaultMethod = c("norm", "logreg"))
+
+nonparametric <- "cart"
+
+syn_param <- mice(heart_failure, 
+                  m = 1, 
+                  method = parametric, 
+                  where = where,
+                  maxit = 1,
+                  seed = 123)
+
+complete(syn_param)
+
+
+syn_nonparam <- mice(heart_failure, 
+                     m = 1, 
+                     method = nonparametric, 
+                     where = where,
+                     maxit = 1,
+                     seed = 123)
+
+complete(syn_nonparam)
+```
+
+## Übung 2
+
+```{r}
+head(complete(syn_param), 10)
+heart_failure
+
+# descriptives
+skimr::skim(complete(syn_param))
+skimr::skim(complete(syn_nonparam))
+skimr::skim(heart_failure)
+
+## plotting
+p_anaemia_param <-
+  ggmice(syn_param, aes(x = anaemia, group = .imp)) +
+  geom_bar(aes(y = after_stat(prop)),
+           position = position_dodge2(),
+           fill = "transparent") +
+  ggtitle("Parametric synthesis")
+
+p_anaemia_nonparam <-
+  ggmice(syn_nonparam, aes(x = anaemia, group = .imp)) +
+  geom_bar(aes(y = after_stat(prop)),
+           position = position_dodge2(),
+           fill = "transparent") +
+  ggtitle("Non-parametric synthesis")
+
+
+p_cat_param <-
+  heart_failure |>
+  select(where(is.factor)) |>
+  colnames() |>
+  map(~ggmice(syn_param, mapping = aes(.data[[.x]], group = .imp)) +
+        geom_bar(aes(y = after_stat(prop)),
+                 position = position_dodge2(),
+                 fill = "transparent")) |>
+  wrap_plots(guides = 'collect') +
+  plot_annotation(title = "Parametric synthesis") &
+  theme(legend.position = "bottom")
+
+p_cat_nonparam <-
+  heart_failure |>
+  select(where(is.factor)) |>
+  colnames() |>
+  map(~ggmice(syn_nonparam, mapping = aes(.data[[.x]], group = .imp)) +
+        geom_bar(aes(y = after_stat(prop)),
+                 position = position_dodge2(),
+                 fill = "transparent")) |>
+  patchwork::wrap_plots(guides = 'collect') +
+  plot_annotation(title = "Non-parametric synthesis") &
+  theme(legend.position = "bottom")
+
+
+p_cont_param <-
+  heart_failure |>
+  select(where(is.numeric)) |>
+  colnames() |>
+  map(~ggmice(syn_param, mapping = aes(.data[[.x]], group = .imp)) +
+        geom_density()) |>
+  wrap_plots(guides = 'collect') +
+  plot_annotation(title = "Parametric synthesis") &
+  theme(legend.position = "bottom")
+
+p_cont_nonparam <-
+  heart_failure |>
+  select(where(is.numeric)) |>
+  colnames() |>
+  map(~ggmice(syn_nonparam, mapping = aes(.data[[.x]], group = .imp)) +
+        geom_density()) |>
+  patchwork::wrap_plots(guides = 'collect') +
+  plot_annotation(title = "Non-parametric synthesis") &
+  theme(legend.position = "bottom")
+
+```
+
+```{r}
+# pMSE berechnen für eine Variable "creatinine_phosphokinase" 
+pi_param <- complete(syn_param) |>
+  bind_rows(`1` = _,
+            `0` = heart_failure,
+            .id = "Synthetic") |>
+        mutate(Synthetic = as.factor(Synthetic)) |>
+        glm(formula = Synthetic ~ creatinine_phosphokinase, family = binomial) |>
+        predict(type = "response")
+
+
+pi_nonparam <- complete(syn_nonparam) |>
+  bind_rows(`1` = _,
+            `0` = heart_failure,
+            .id = "Synthetic") |>
+        mutate(Synthetic = as.factor(Synthetic)) |>
+        glm(formula = Synthetic ~ creatinine_phosphokinase, family = binomial) |>
+        predict(type = "response")
+
+pmse_param <- mean((pi_param - 0.5)^2)
+pmse_param / ((2-1)*(1/2)^3/(2*nrow(heart_failure)))
+
+pmse_nonparam <- mean((pi_nonparam - 0.5)^2)
+pmse_nonparam / ((2-1)*(1/2)^3/(2*nrow(heart_failure)))
+
+## pMSE für alle Variablen
+utility.gen.data.frame(complete(syn_param), heart_failure)
+utility.gen.data.frame(complete(syn_nonparam), heart_failure)
+
+# 
+utility.tables.data.frame(complete(syn_param), heart_failure,
+                          min.scale = 0, max.scale = 30)
+utility.tables.data.frame(complete(syn_nonparam), heart_failure,
+                          min.scale = 0, max.scale = 30)
+```
