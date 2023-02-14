@@ -26,6 +26,8 @@ format:
     code-fold: show
     code-tools: true
     code-link: true
+bibliography: ../www/references.bib
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
 ---
 
 # Session Info
@@ -41,14 +43,13 @@ sessionInfo()
 ```
 
 
-
 # Options & Layout
 
 ::: callout-tip
 ## Basic intro to Quarto
+
 <https://quarto.org/docs/get-started/hello/rstudio.html>
 :::
-
 
 ## YAML
 
@@ -63,7 +64,8 @@ author:
     correspondence: true
   - name: "First Coauthor"
     affiliation: "other institute"
-date: "`r Sys.Date()`" # inserts the date of compiling
+date: last-modified # other option is: today
+date-format: "DD MMMM YYYY"
 editor: source
 execute:
   echo: true
@@ -81,6 +83,8 @@ format:
     code-fold: show
     code-tools: true
     code-link: true
+bibliography: ../www/references.bib
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
 ---
 ```
 
@@ -146,11 +150,11 @@ This works sometimes, but not always - in my experience.
     -   try rendering the new file
 :::
 
-
 # Running R Code
 
 ::: callout-tip
 ## Computations in Quarto
+
 <https://quarto.org/docs/get-started/computations/rstudio.html>
 :::
 
@@ -170,11 +174,12 @@ You can add options to executable code like this
 The `echo: false` option disables the printing of code (only output is displayed).
 
 # Other (cool) stuff
+
 ::: callout-tip
 ## Basic intro to Quarto
+
 <https://quarto.org/docs/get-started/authoring/rstudio.html>
 :::
-
 
 ## Embed any file in the HTML
 
@@ -190,7 +195,6 @@ Here I used the function `embed_file()`:
 ```
 
 The function `here()` will always start searching for the file from the working directory. This is important, if you move the qmd-file to other folders.
-
 
 ## Tabsets
 
@@ -212,10 +216,29 @@ plot(penguins$bill_length_mm, penguins$bill_depth_mm)
 ```
 
 
-## Mathematical Equations
-
 ## References
 
-## Callouts
+1. Export your references to a BibTex-file (.bib file ending)
+2. Specify the location of the file in the YAML header of your Quarto document.
+```{yaml}
+#| eval: false
 
-## Output Formats
+---
+title: 'This is my cool Quarto document' 
+bibliography: ../www/references.bib
+---
+```
+
+3. If you want, provide a citation style (via `.csl` file). This URL sets the style to APA 7.
+
+```{yaml}
+#| eval: false
+
+---
+title: 'This is my cool Quarto document' 
+bibliography: ../www/references.bib
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+---
+```
+
+4. Cite in the body of your text by using "[@...]". E. g. [\@mayer.2014] will give [@mayer.2014]. A list of references will be automatically produced at the end of the document.
