@@ -1,0 +1,536 @@
+---
+title: "Codebook package"
+subtitle: "Step-by-step & Exercises"
+author:
+  - name: "Jürgen Schneider"
+    email: "ju.schneider@dipf.de"
+    affiliation: "DIPF"
+    correspondence: true
+date: "`r Sys.Date()`" # inserts the date of compiling
+editor: source
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false # true will prevent embed-resources
+  eval: false
+format: 
+  pdf:
+    theme: cerulean
+    fontsize: 0.85em
+    toc: true
+    toc-location: left
+    toc-depth: 4
+    embed-resources: true # will make standalone html file
+    code-fold: false
+    code-tools: false
+    code-link: false
+---
+
+
+```{r}
+#| eval: true
+#| echo: false
+
+library(here)
+library(xfun)
+```
+
+\
+\
+\
+
+
+
+::: {.callout-note}
+# Wann muss ich die Code-Schnipsel aus dieser Anleitung ergänzen/verändern?
+
+Oftmals können Sie die Code-Chunks einfach kopieren und in Ihr Skript an die passende Stelle einfügen. Manchmal müssen Sie aber auch etwas verändern. Diese Stellen habe ich in den Kommentaren mit `# DO:` gekennzeichnet. Beispiel:
+
+```{r}
+print(paste("David Hasslehoff",             # DO: Ergänzen Sie Ihre Spotify Nr. 1
+            "ist auf Spotify meine Nr. 1"))
+```
+
+Manche Kommentare habe ich aber auch nur eingefügt, um zu erklären was in der Funktion passiert. Diese Kommentare sind entsprechend _nicht_ mit `# DO:` gekennzeichnet.
+
+:::
+
+::: {.column-margin}
+__Tutorial__  
+Dieser Workshop basiert stark auf Ruben Arslans [Tutorial des Codebooks](https://rubenarslan.github.io/codebook/articles/codebook_tutorial.html).  
+\
+
+__Webseite__  
+[rubenarslan.github.io/codebook/index.html](https://rubenarslan.github.io/codebook/index.html)  
+\
+
+__Paper__  
+Arslan RC. How to Automatically Document Data With the codebook Package to Facilitate Data Reuse. Advances in Methods and Practices in Psychological Science. 2019;2(2):169-187. doi:[10.1177/2515245919838783](https://doi.org/10.1177/2515245919838783)  
+:::
+
+\
+\
+\
+
+
+
+# Installation
+
+Bitte installieren Sie die **Development-Version** des Codebook Packages!  
+Hier sind schon einige Bugs gefixed, die in der CRAN-Version noch drin sind.  
+  
+Oftmals vermeidet es Installationsprobleme, wenn Sie die **Installation in R** (und nicht RStudio) **vornehmen**. Je nach Ihren gewälten Einstellungen, werden beim Start von RStudio nämlich bereits Pakete geladen mit denen dann Konflikte entstehen könnten.
+
+```{r}
+install.packages("remotes")
+remotes::install_github("rubenarslan/codebook") # installiert direkt von github
+```
+
+\
+\
+
+# Aufgabe 1 (Erstes Codebook)
+
+1. Erstellen Sie ein neues Projekt in R (z.B. "codebook_package")
+2. Erstellen Sie einen Unterordner "data", in den Sie Ihre Daten kopieren
+3. Geben Sie in der Console `codebook::new_codebook_rmd()` ein
+4. Im neu geöffneten Dokument wird ein Beispieldatensatz geladen. Ersetzen Sie diesen durch Ihren Datensatz: 
+   - Löschen Sie den Code `codebook_data <- codebook::bfi`
+   - Ersetzen Sie ihn mit Code, der Ihren Datensatz in das Objekt `codebook_data` lädt. Mein Lieblingspaket hierfür ist `{rio}`, da es mit fast allen Dateiformaten umgehen kann.
+
+```{r}
+codebook_data <- rio::import("data/meineDaten.csv")  # DO: Pfad zum und Namen Ihres 
+                                                     #     Datensatzes einfügen
+```
+
+5. Exportieren ("kniten") Sie das Codebook in ein HTML indem Sie auf den Button "knit" klicken.
+
+![](www/knit.jpg)
+
+\
+\
+
+# Aufgabe 2 (Codebooks vergleichen)
+
+Schauen Sie Ihr Codebook genau an und vergleichen Sie es mit dem [Codebook aus einem meiner früheren Projekte (Link)](https://raw.githack.com/j-5chneider/re-building-trust/main/9_data%2Bcodebooks/codebook_study1_undergrad.html).
+
+
+* Was sind die kleinen und großen Unterschiede?  
+* Was sind Aspekte, die Sie in Ihrem Codebook noch ergänzen wollen?  
+* Was sind Aspekte, die bei meinem Codebook noch ergänzt werden könnten?
+
+
+::: callout-tip
+## Aufgaben
+1. Vergleichen Sie die Codebooks (Individualarbeit)  
+2. Beantworten Sie die Fragen (für sich) (Individualarbeit)  
+3. Zeigen Sie sich gegenseitig ihre Codebooks und sprechen Sie über die Unterschiede und was Sie noch ergänzen wollen.
+:::
+
+
+__Fertig?__  
+Lassen Sie es mich wissen: [__pollev.com/js123__](https://pollev.com/js123)
+
+\
+\
+
+
+# Aufgabe 3 (Variablenlabels)
+
+Wenn Daten, wie in SAV-Dateien, bereits Metadaten (Variablen-, Wertelabels) beinhalten, dann sollten diese automatisch durch das codebook package übernommen werden. Sollten Sie aber z. B. CSV-Datendateien ohne Metadaten importiert haben, müssen diese nachträglich definiert werden.
+
+::: callout-tip
+## Aufgaben
+Ergänzen oder überarbeiten Sie Variablenlabels Ihrer Wahl. Verwenden Sie hierzu eine der beiden nachfolgenden Optionen.
+:::
+
+::: panel-tabset
+### Selbst anlegen
+
+Legen Sie Variablenlabels selbst an, indem Sie die Funktion `var_label()` aus dem `{labelled}` package verwenden. `var_label()` nimmt eine Liste an, in der Sie mehrere Variablenlabels gleichzeitig defineren können. Auf der linken Seite des `=` geben Sie den Namen der Variablen an, wie sie im Datensatz erscheint und auf der rechten Seite des `=` das Label der Variablen.
+
+```{r}
+library(labelled)
+var_label(codebook_data) <- list(    # DO: Unten Ihre Variablennamen und -labels einfügen
+        selbstwirksamkeit_7 = "Was auch immer passiert, ich werde schon klarkommen.", 
+        selbstwirksamkeit_8 = "Für jedes Problem kann ich eine Lösung finden."
+        )
+```
+
+
+### Aus "Dictionary" importieren
+
+Sie haben eine Excelliste o.ä. in dem Sie die Variablen und deren Variablenlabels bereits notiert haben? Gut! Diese können Sie importieren und einfach auf Ihren Datensatz loslassen.  
+  
+Voraussetzung ist, dass im sogenannten "Dictionary" die Namen der Variablen in der Spalte "variable" und die Variablenlabel in der Spalte "label" stehen. Ähnlich wie hier:  
+
+![](www/swk.jpg)
+
+Importieren Sie dieses Dictionary und wenden Sie es auf den Datensatz an, anhand der Funktion `dict_to_list()`.
+
+```{r}
+library(dplyr)    # Ermöglicht die Zeilenschreibweise mit %>%
+dict <- rio::import("data/meinDictionary.xlsx") # DO: Speicherort des Dictionary einfügen
+
+var_label(codebook_data) <- dict %>% 
+  dplyr::select(variable, label) %>% # wählt die Spalten "variable" und "label" aus
+  dict_to_list()                     # wendet das Dictionary auf die Daten an
+```
+
+
+:::
+
+__Fertig?__  
+Lassen Sie es mich wissen: [__pollev.com/js123__](https://pollev.com/js123)
+
+\
+\
+
+# Aufgabe 4 (Wertelabels)
+
+Auch die Wertelabels sollten automatisch aus Daten übernommen werden, die bereits Metadaten beinhalten. Auch hier gilt: Diese können fehlerhaft oder (im Falle fehlender Metadaten) nicht vorhanden sein.  
+  
+Sie können Wertelabels für jede Variable **manuell** ergänzen/überarbeiten. Zudem können Sie sich zunutze machen, dass manchmal mehrere Items (z. B. Likert-Skalen) dieselben Wertelabels aufweisen. In diesem Fall müssen Sie die Wertelabels nicht einzeln für jede der Variablen definieren, sondern können sie gleich **auf ein ganzes Set an Variablen anwenden**.
+
+::: panel-tabset
+## Manuell ergänzen/überarbeiten
+
+Zur Ergänzung der Wertelabels nutzt codebook die Funktion `val_labels()` aus dem `{labelled}` package. Für die Definition müssen Sie die Wertelabels links des `=` als character und die Werte rechts des `=` bereitstellen. Auf welche Variable Sie diese Wertelabels anwenden wollen, tragen Sie innerhalb der Funktion `val_labels()` ein:
+
+```{r}
+val_labels(codebook_data$sprache) <-   # DO: Name der Variable ergänzen
+  c("Deutsch ist Muttersprache" = 1,       # DO: Wertelabels & Werte ergänzen
+    "Deutsch ist nicht Muttersprache" = 2) # DO: Wertelabels & Werte ergänzen
+```
+
+
+## Auf ein Set an Variablen anwenden
+
+Wenn sich Wertelabels für eine Reihe an Items wiederholen, dann definieren Sie zunächst die Wertelabels und Werte (links und rechts des `=`). Mit diesem Code erstellen Sie eine Funktion, die wir anschließend auf ein Set an Variablen anwenden werden:
+
+```{r}
+add_likert_labels <- function(x) {
+  val_labels(x) <- c("Stimmt gar nicht" = 1,     # DO: Wertelabels  
+                     "Stimmt eher nicht" = 2,    #     und
+                     "Teils/teils" = 3,          #     Werte
+                     "Stimmt eher" = 4,          #     ergänzen
+                     "Stimmt voll und ganz" = 5) # 
+  x
+  }
+```
+
+Jetzt müssen Sie noch einen Vektor mit den Namen der Variablen erstellen (innerhalb der Funktion `c()`), auf welche die neuen Wertelabels angewendet werden sollen.
+
+```{r}
+codebook_data <- codebook_data %>% 
+  dplyr::mutate(across(c(selbstwirksamkeit_1,   # DO: Definition aller
+                         selbstwirksamkeit_2,   #     Items mit denselben
+                         selbstwirksamkeit_3,   #     Wertelabels
+                         selbstwirksamkeit_4,   # 
+                         selbstwirksamkeit_5,   # 
+                         selbstwirksamkeit_6,   # 
+                         selbstwirksamkeit_7,   # 
+                         selbstwirksamkeit_8,   # 
+                         selbstwirksamkeit_9,   # 
+                         selbstwirksamkeit_10), #
+                       add_likert_labels))  # oben definierte Wertelabels 
+                                            # werden angewendet.
+```
+
+
+:::
+
+::: callout-tip
+## Aufgabe
+
+1. Definieren Sie die Wertelabels für eine Variable manuell
+2. Definieren Sie die Wertelabels für ein Set an Variablen (falls anwendbar)
+3. Kontrollieren Sie in einem vorher-nachher-Vergleich, ob die Umcodierung korrekt geklappt hat.
+
+:::
+
+__Fertig?__  
+Lassen Sie es mich wissen: [__pollev.com/js123__](https://pollev.com/js123)
+
+\
+\
+
+# Aufgabe 5 (negative Items definieren)
+
+Sind Items negativ formuliert und man bildet eine Skala, sind die Reliabilitätswerte logischerweise nicht sehr hoch. Auch hier liefert das codebook package Funktionen mit: `addR()` und `reverse_labelled_values()`
+
+__Negativ formulierte Items kennzeichnen__  
+
+Zunächst müssen Sie die negativ formulierten Items, die umcodiert werden sollen als solche kennzeichnen. Wir nehmen das vor, indem wir dem Variablennamen ein "R" anhängen. Das geht automatisch mit der Funktion `addR()`, sie müssen lediglich die negativ formulierten Items auswählen (hier z. B. `Item1`, `Item2`)
+
+```{r}
+library(dplyr)    # Ermöglicht die Zeilenschreibweise mit %>%
+
+codebook_data <- codebook_data %>% 
+  rename_with(add_R,
+              c(Item1, Item2)) # DO: wählen Sie die negativ formulierten Items aus
+```
+
+__Variablen mit "R" im Namen umcodieren__  
+
+Der folgende Code wählt alle Items aus, die aur "R" enden und codiert die Zahlenwerte um, lässt aber die Wertelabels gleich. So ist immer ersichtlich, ob das Item umcodiert wurde oder nicht. Im Code müssen Sie nichts ändern.
+
+```{r}
+codebook_data <- codebook_data %>% 
+    dplyr::mutate(across(matches("\\dR$"), # wählt alle Items aus, deren Name auf R enden
+                         reverse_labelled_values) # codiert die Zahlenwerte um,
+                  )                               # belässt aber die Wertelabels
+```
+
+::: callout-tip
+## Aufgabe
+
+1. Benennen Sie die negetiv formulierten Items ihres Datensatzes anhand der Funktion `addR()` um.
+2. Codieren Sie diese Items dann um.
+3. Schauen Sie sich die Werte im bisherigen Codebook an, kniten Sie das neue Codebook und kontrollieren Sie, ob das Ergebnis stimmt (Vorher-Nachher-Vergleich): Sind die richtigen Items umcodiert worden?
+
+:::
+
+__Fertig?__  
+Lassen Sie es mich wissen: [__pollev.com/js123__](https://pollev.com/js123)
+
+\
+\
+
+# Aufgabe 6 (Skalen definieren)
+
+Items einer Skala werden im Codebook automatisch als Skala berichtet. Sollte das package aber nicht erkennen, dass es sich um eine Skala handelt, dann werden sie als Einzelitems im Codebook berichtet.
+
+:::: {.columns}
+::: {.column width="49%"}
+__Einzelitems im Codebook__
+<img src="www/item_item.jpg" style="border:1px solid darkgrey; width: 100%" />
+:::
+::: {.column width="2%"}
+:::
+::: {.column width="49%"}
+__Items als Skala im Codebook__  
+<img src="www/item_scale.jpg" style="border:1px solid darkgrey; width: 100%" />
+:::
+::::
+\
+
+::: callout-tip
+## Aufgabe
+1. Definieren Sie eine Skala in Ihrem Datensatz anhand einer der zwei Möglichkeiten, siehe unten.
+2. Überprüfen Sie die Plausibilität der Skala im Codebook.
+:::
+
+\
+
+__Möglichkeiten__ (dass codebook Skalen als solche erkennt)
+
+::: panel-tabset
+## Voraussetzungen bereits erfüllt?
+
+Wenn beide Voraussetzungen erfüllt sind:
+
+* Die Items einer Skala haben dieselben Variablennamen und unterscheiden sich lediglich durch eine laufende Nummer am Ende (z. B. `neuro_1`, `neuro_2`, `neuro_3`)
+* Es existiert eine Skalenvariable, die auch den Namen der Items trägt (ohne Zahl, z. B. `neuro`)
+
+
+::: {.callout-note}
+## Übrigens
+Das Survey-Tool formr berechnet automatisch die Skalenvariable, wenn die Items im Fragebogen so angelegt sind, wie oben beschrieben: Derselbe Variablennamen mit laufenden Nummern am Ende.
+:::
+
+## Manuell definieren
+
+Sie können die Items einer Skala auch manuell definieren, codebook stell hierfür die Funktion `aggregate_and_document_scale()` bereit. In diesem Fall benötigen Sie also nur die Variablen der Items, eine Skalenvariable muss noch nicht erstellt worden sein. Sie erstellen die Skalenvariable durch `aggregate_and_document_scale()` - in unserem Falle benennen wir die Variable `extraversion`.  
+  
+Um das sogenannte Piping (`%>%`) und die Funktion `select()` zu benutzen, müssen Sie noch das package `{dplyr}` laden.  
+
+```{r}
+library(dplyr)    # Ermöglicht die Zeilenschreibweise mit %>%
+
+codebook_data$extraversion <- codebook_data %>% # DO: Wählen Sie einen Namen für die neue Skala
+  dplyr::select(E1:E5) %>%                      # DO: Wählen Sie die Items der Skala aus
+  aggregate_and_document_scale()                # definiert Skala aus den Items E1:E5
+```
+
+FYI: In diesem Fall muss die neu erstellte Skalenvariable nicht zwangsläufig dem Namen der Items tragen.
+
+:::
+
+\
+\
+
+# Troubleshooting
+
+## Reliabilitäten nicht berechnet
+
+Installieren Sie das package `{ufs}`.
+
+```{r}
+install.packages("ufs")
+```
+
+Installieren Sie das package `{GGally}`.
+
+```{r}
+install.packages("GGally")
+```
+\
+  
+## Viele Warnings angezeigt
+
+Die Warnings, Messages und Errors werden absichtlich angezeigt. Dies hilft beim debugging, also der Fehlersuche, wenn ein Teil des Codes nicht funktionieren sollte.  
+
+<img src="www/warnings.jpg" style="width: 70%; border: 1px solid darkgrey" />
+  
+Natürlich kann man deren Anzeige auch deaktivieren. Die sogenannten Chunk-Options werden gleich im ersten R-Chunk definiert - dort können Sie die Benachrichtigungen also auch ausstellen: Setzen Sie hierfür die Argumente `warning`, `message` und `error` auf `FALSE`.
+
+```{r}
+knitr::opts_chunk$set(
+  warning = FALSE, # don't show warnings during codebook generation
+  message = FALSE, # don't show messages during codebook generation
+  error = FALSE, # don't show errors
+  echo = TRUE  # show R code
+)
+```
+\
+
+## Mittelwerte sind sehr klein/groß
+
+Haben Sie Ihre fehlenden Werte im ursprünglichen Datensatz mit 99 oder 999 definiert?  
+Oder haben Sie fehlenden Werte mit negativen Werten definiert?  
+  
+Wahrscheinlich wurden diese Werte in R nicht als fehlend interpretiert. Die Funktion `detect_missing()` hilft Ihnen dabei diese fehlend zu definieren.
+
+```{r}
+codebook_data <- detect_missing(codebook_data,
+    negative_values_are_missing = FALSE, # DO: Wenn negative Werte fehlend sind,
+                                         #     dann hier TRUE setzen
+    ninety_nine_problems = TRUE,   # DO: Wenn 99 oder 999 fehlende Werte sind,
+    )                              #     dann hier TRUE setzen
+```
+\
+
+## Reliabilitäten sind sehr schlecht
+
+1. Haben Sie die negativ formulierten Items umgepolt? How to Items umpolen, siehe Aufgabe 5.
+2. Haben Sie Ihre fehlenden Werte als solche definiert? Siehe ein Punkt weiter oben.
+
+\
+
+## Grafiken sind zu klein
+
+Die Grafiken können in den Chunk-Options skaliert werden. Spielen Sie etwas an den Chunk-Options herum und schauen Sie, welche Einstellungen für Sie einen passenden Output liefern.
+
+```{r}
+knitr::opts_chunk$set(
+  fig.width = 9,    # DO: Setzen Sie unterschiedliche Werte für Breite
+  fig.height = 7    #     und Höhe der Abbildungen ein
+)
+```
+\
+\
+
+# Weitere Optionen
+
+## Daten in das HTML einbetten
+
+Verwenden Sie das `xfun` package, um Ihre Daten direkt in das HTML einzubetten. Nutzer*innen können die Daten aus dem HTML heraus herunterladen (auch ohne Internetverbindung). Wenn Sie die HTML Datei weitergeben, sind die Daten also schon enthalten! Beispiel:
+
+Click here to download the `r xfun::embed_file(here('www/never.gif'), text = "qualitative data")` on the topic of never giving up.
+
+Hier habe ich die `embed_file()` Funktion inline (also im Fließtext) verwendet:  
+  
+"...download the `` `r '\x60r xfun::embed_file("www/never.gif", text = "qualitative data")\x60'` `` on the topic..."
+\
+
+## Metadaten über gesamten Datensatz
+
+Genau wie Metadaten für einzelne Variablen definiert werden, können auf Ebene des gesamten Datensatzes Metadaten definiert werden. Diese geben Auskunft über Aspekte, wie 
+
+* Name des Datensatzes `name`
+* Beschreibung des Datensatzes `description`
+* Erhebungszeitraum `temporalCoverage`
+* Lizenz (normalerweise URL zur Lizenz) `license`
+* Persistenter Identifier (normalerweise DOI) `identifier`
+* Name der\*des Urheber*in `creator`
+* URL (z. B. können Kontaktinformationen durch Link auf die ORCID hinterlegt werden) `url`
+* Publikationsdatum `datePublished`
+
+
+```{r}
+                                # DO: Hier können jeweils Informationen ergänzt werden
+metadata(codebook_data)$name <- "Data of project SE-PRIME"
+metadata(codebook_data)$description <- "Investigation of self-efficacy in ..."
+metadata(codebook_data)$temporalCoverage <- "Apr 2022 - Feb 2023" 
+metadata(codebook_data)$license <- "https://creativecommons.org/licenses/by/4.0/"
+metadata(codebook_data)$identifier <- "https://doi.org/10.1080/00461520.2021.1886103"
+metadata(codebook_data)$creator <- "Erika Musterfrau"
+metadata(codebook_data)$url <- "https://orcid.org/0000-0002-7867-2101"
+metadata(codebook_data)$datePublished <- "2023-02-13"
+```
+
+\
+
+## Datensatz mit Metadaten exportieren
+
+Bevor Sie das Codebook mit `codebook(codebook_data)` erzeugen, können Sie den Datensatz mit allen Metadaten exportieren. Wählen Sie hierzu ein Dateiformat aus, das es erlaubt Metadaten mitzuspeichern. Hierzu gehört das
+
+* R data structure Format .rds
+* SPSS data file Format .sav
+
+Für das .rds-Format spricht, dass es auf einer Open Source Software aufbaut und somit besser accessible ist.
+
+__in .rds speichern__
+
+```{r}
+rio::export(codebook_data, "meinDatensatz.rds") # DO: Name der Datei ergänzen
+```
+
+__in .sav speichern__
+
+```{r}
+rio::export(codebook_data, "meinDatensatz.sav") # DO: Name der Datei ergänzen
+```
+
+\
+
+## Einführung ins Codebook
+
+Sie können den obersten Teil des Codebooks selbst gestalten. Es empfielt sich hier evtl. eine kurze Einführung in das Projekt oder den Datensatz bereitzustellen.  
+  
+Bearbeiten Sie hierzu den Fließtext nach dem YAML-Teil. Welche Formatierungsoptionen Sie in R Markdown haben, können Sie im [R Markdown Cheat Sheet (Link)](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown-2.0.pdf) nachschauen.
+
+\
+
+## Layout Themes
+
+Wollen Sie einen anderen Look für das Dokument ausprobieren? Eine Auswahl an Themes finden Sie in der [Theme Gallery (Link)](https://www.datadreaming.org/post/r-markdown-theme-gallery/).  
+  
+Den Namen des Themes müssen Sie dann lediglich im YAML-Teil des R Markdown Dokuments definieren:
+
+```{yaml}
+---
+title: "Codebook"
+output:
+  html_document:
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    code_folding: 'hide'
+    self_contained: true
+    theme: cerulean        # DO: Tragen Sie hier den Namen des Themes ein
+---
+```
+\
+\
+
+# Session Info
+
+Zum Zwecke der Reproduzierbarkeit, hier noch mein Setup.  
+This was produced under the R-Version and with the packages:
+
+```{r}
+sessionInfo()
+```
