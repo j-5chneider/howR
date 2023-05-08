@@ -1,0 +1,207 @@
+---
+title: 'Preregistration' 
+subtitle: '(of secondary data analysis). Why and how.'
+title-slide-attributes:
+  data-background-image: ../www/title_bg4.jpg
+  data-background-size: cover
+  data-background-opacity: "0.3"
+  notes: ""
+author: "<b>Jürgen Schneider, Verena Jörg</b>"
+date: last-modified # today
+date-format: "DD MMMM YYYY"
+format: 
+  revealjs:
+      theme: [sky, www/custom.scss] # sky default
+      logo: ../www/dipf-logo.png
+      footer: "footer"
+      smaller: true
+      scrollable: true
+      embed-resources: true
+      slide-number: true
+bibliography: ../www/references.bib
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+---
+
+
+```{r setup, include=FALSE}
+# knitr::opts_chunk$set(echo = FALSE,
+#                       message=FALSE, 
+#                       warning=FALSE)
+
+### DOWNLOAD NEWEST SOURCES
+# download.file("https://drive.google.com/uc?export=download&id=1ASV99YHMHSNChSNzqbZwvz2SiqYvmqO_", # befindet sich im DIPF Ordner
+              # "www/references.bib", overwrite = T)
+library(fontawesome)
+library(ggplot2)
+library(kableExtra)
+```
+
+# Why preregister studies?
+
+## Why preregister studies?
+
+<iframe src="https://embed.polleverywhere.com/discourses/gM7uuJtWf5E6ml3wgf5Bi?controls=none&short_poll=true" width="100%" height="600px" data-external="1"></iframe>
+
+## Why preregister studies?
+#### It makes Karl Popper happy
+
+* Critical Rationalism and Falsificationism: Basic orientations in modern philosophy of science <br /><br /><br />
+* we make a __prediction__ ("speculation") about the future as accurately as possible (rational part)<br /><br /><br />
+* the main activity of a researcher is to __invalidate__ a theory by observation or experiment (critical part)
+
+<br /><br />
+`r fa(name = "long-arrow-alt-right")` deductive reasoning / hypothesis testing  
+[@popper.1935; @popper.1989]
+
+
+. . .
+
+<img src="../www/popper_happy.jpg" height = "200px" style="margin-left:50%" />
+
+
+## Why preregister studies?
+#### It makes Karl Popper happy
+
+__does not follow this logic:__  
+
+* looking at the world and discover patterns (exploratory research) <br />`r fa(name = "long-arrow-alt-right")` generating vs. testing hypothesis<br /><br />
+* heavily criticized by Popper <br />(you will always find support for any claim, so this doesn't make a strong theory)<br /><br /><br />
+
+_e.g. taking a big data set and correlating many variables_  
+[@popper.1935; @popper.1989]
+
+. . .
+
+<img src="../www/popper_sad.jpg" height = "200px" style="margin-left:0%" />
+
+
+## Why preregister studies?
+#### It makes Karl Popper happy
+  
+\
+\
+
+Does preregistration make any __difference__ at all? In the end, the __test__ is the __same__!
+
+. . .
+
+<img src="../www/well_yes.jpg" height="350px" style="margin-left:0%" />
+
+
+## Why preregister studies?
+
+
+
+:::: {.columns}  
+::: {.column width="45%"}
+\
+\
+
+__Kaplan & Irving, 2015__
+
+* NHLBI supported RCTs<br /><br />
+* on treatment or prevention of cardiovascular disease<br /><br />
+* relative risk of primary outcome<br /><br />
+* natural experiment: <br />had to be preregistered after year 2000
+:::
+
+::: {.column width="55%"}
+<img src="../www/kaplan0.jpg" height="100%"/>
+:::
+::::
+[@kaplanirvin.2015]
+
+## Why preregister studies?
+
+
+:::: {.columns}  
+::: {.column width="45%"}
+\
+\
+
+__Kaplan & Irving, 2015__
+
+* NHLBI supported RCTs<br /><br />
+* on treatment or prevention of cardiovascular disease<br /><br />
+* relative risk of primary outcome<br /><br />
+* natural experiment: <br />had to be preregistered after year 2000
+:::
+
+::: {.column width="55%"}
+<img src="../www/kaplan1.jpg" height="100%"/>
+:::
+::::
+[@kaplanirvin.2015]
+
+## Why preregister studies?
+#### Because humans are  <span style="color:#b3b3b3">~~&nbsp;idiots&nbsp;~~</span>  fallable
+
+<img src="../www/biases.svg" width="65%"/><span class="citation"><a href="https://commons.wikimedia.org/wiki/File:Cognitive_bias_codex_en.svg">design: John Manoogian IIIcategories and descriptions: Buster Bensonimplementation: TilmannR</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, via Wikimedia Commons</span>
+
+## Why preregister studies?
+#### Because humans are  <span style="color:#b3b3b3">~~&nbsp;idiots&nbsp;~~</span>  fallable
+
+* we __believe in our theory__ and want to "prove" it (`r fa(name = "not-equal")` critical rationalism!)
+* e.g. confirmation bias
+* questionable research practice (QRP): __*p*-hacking__
+  - outcome switching
+  - unplanned selective reporting
+  - unplanned subgroup analyses
+  - unplanned sequential testing
+  - unplanned covariates
+  - unplanned deletion of cases (e.g. "outliers")
+  - ...
+
+[@munafoetal.2017; @johnetal.2012]
+
+
+## Why preregister studies?
+#### Because humans are  <span style="color:#b3b3b3">~~&nbsp;idiots&nbsp;~~</span>  fallable
+
+* we believe that __we "knew all along"__ that the patterns will show up like this (`r fa(name = "not-equal")` critical rationalism!)
+* e.g. hindsight bias
+* QRP: __HARKING__
+
+<img src="../www/munafo.jpg" width="45%"/>
+
+[@munafoetal.2017]
+
+## Why preregister studies?
+
+__1.__ <img src="../www/popper_sad.jpg" height = "200px" style="margin-left:0%" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`r fa(name = "long-arrow-alt-right", height = "50px")`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="../www/popper_happy.jpg" height = "200px" style="margin-left:0%" />
+
+\
+\
+
+__2.__ Great tool to __help us__ protect ourselves from biased inferences and __help others__ recognize that bias has been tried to be avoided.
+  
+BTW: registered reports even more so
+
+# Common objections
+
+and objections to these objections  
+and one affirmation of an objection
+
+## Common objections
+
+\
+\
+
+| **objection**                | **comment** |
+|:----------------------------|:----------------------------|
+| it's a lot of work | it's mainly front-loading |
+| linking the pre-registration when submitting a paper, uncovers the blinding | there are possibilities to blind the prereg on OSF and aspredicted.org |
+| secondary data analysis comes after the data collection?? | yes, but you didn't see the data yet (provide proof of data access date)|
+|   | yes, because you might already infer relations in data from other known publications|
+
+# {-}
+
+
+<div id="refs"></div>
+
+
+# Credit
+
+
+  
+Icons by Font Awesome CC-BY 4.0

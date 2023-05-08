@@ -1,0 +1,34 @@
+/*-- scss:defaults --*/
+  
+.slide-background-content {
+    background-color: #fff;
+}
+
+.slide-logo {
+  max-height: 10% !important;
+}
+
+.date {
+  font-size: .7em;
+  /*color: #6ca5d940;*/
+}
+
+.blueTop, .blueBottom {
+        padding: 5px;
+        text-align: center;
+}
+
+.blueTop {
+    color: #FFF;
+    background-color: #6ca5d990;
+}
+
+.blueBottom {
+    background-color: #6ca5d940;
+}
+
+.citation {
+  float: right;
+  opacity: .6;
+  font-size: .7em;
+}
