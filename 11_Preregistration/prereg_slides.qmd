@@ -76,7 +76,7 @@ _e.g. taking a big data set and correlating many variables_
 
 
 ## Why preregister studies?
-#### It makes Karl Popper happy
+#### Because humans are  <span style="color:#b3b3b3">~~&nbsp;idiots&nbsp;~~</span>  fallable
   
 \
 \
