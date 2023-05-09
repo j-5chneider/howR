@@ -193,6 +193,7 @@ and one affirmation of an objection
 | linking the pre-registration when submitting a paper, uncovers the blinding | there are possibilities to blind the prereg on OSF and aspredicted.org |
 | secondary data analysis comes after the data collection?? | yes, but you didn't see the data yet (provide proof of data access date)|
 |   | yes, because you might already infer relations in data from other known publications|
+| it doesn't make sense to preregister exploratory research | yes, but it helps you to avoid committing HARKING unconsciously |
 
 # {-}
 
