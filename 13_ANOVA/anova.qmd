@@ -1,0 +1,291 @@
+---
+title: "ANOVAs"
+subtitle: "scripts, interpretations, plots"
+author:
+  - name: "Jürgen Schneider"
+    email: "ju.schneider@dipf.de"
+    affiliation: "DIPF"
+    correspondence: true
+date: "`r Sys.Date()`" # inserts the date of compiling
+editor: source
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false # true will prevent embed-resources
+format: 
+  html:
+    theme: cerulean
+    fontsize: 0.85em
+    toc: true
+    toc-location: left
+    toc-depth: 4
+    embed-resources: true # will make standalone html file
+    code-fold: true
+    code-tools: true
+    code-link: true
+editor_options: 
+  chunk_output_type: console
+---
+
+# loading packages
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+library(car)
+library(report)
+library(BFpack)
+library(ggpubr)
+library(rstatix)
+library(bain)
+```
+
+
+# R Version
+
+```{r}
+sessionInfo()
+```
+
+
+
+# First data set
+
+```{r}
+glimpse(penguins)
+```
+
+# Assumptions 
+
+## Homogeneity of Variances
+
+Assumption: "The variances of the populations that the samples come from are equal."  
+  
+The Levene test tests the **null hypothesis** that variance homogeneity exists. The **alternative hypothesis** assumes variance heterogeneity
+
+### `leveneTest()` in `car` package
+```{r}
+leveneTest(body_mass_g ~ species, data = penguins)
+```
+
+The p-value is below .05, this means we have to reject the null hypothesis. We therefore have evidence against the assumption that variance homogeneity exists.
+
+### Bayesian alternative
+
+A quick search didn't yield any good results for functions.
+
+
+## Normality 
+
+Assumption: "Each sample was drawn from a normally distributed population."  
+  
+### `qqPlot()` in `car` package
+
+QQ plot (or quantile-quantile plot) draws the correlation between a given sample and the normal distribution. With normality, the data points should move along the diagonal line.
+
+```{r}
+qq_data <- aov(body_mass_g ~ species, data = penguins)
+qqPlot(qq_data)
+```
+
+Do the data points move along the diagonal line? Well...
+
+### `ggqqplot()` in `ggpubr` package
+
+
+```{r}
+ggqqplot(penguins$body_mass_g)
+```
+
+Do the data points move along the diagonal line? Well...
+
+### Shapiro-Wilk Test
+
+The Shapiro-Wilk Test tests the **null hypothesis** that the samples come from a normal distribution vs. the **alternative hypothesis** that the samples do not come from a normal distribution.
+
+```{r}
+shapiro.test(penguins$body_mass_g)
+```
+
+The p-value is below .05, this means we have to reject the null hypothesis. We therefore have evidence against the assumption that normality of distributions exist. Please note that with large sample sizes, frequentistic tests will nearly always be significant.  
+    
+In general, a one-way ANOVA is considered to be **fairly robust** against violations of the normality assumption as long as the sample sizes are sufficiently large.  
+  
+If the normality assumption is severely violated or if you just want to be extra conservative, you have two choices:
+
+1. Transform the response values of your data so that the distributions are more normally distributed.
+2. Perform an equivalent non-parametric test such as a Kruskal-Wallis Test that doesn’t require the assumption of normality.
+
+  
+
+# ANOVA
+
+There are several packages that realize an ANOVA. 
+
+## `aov()` in base R (`stats`)
+
+```{r}
+aov_model1 <- aov(body_mass_g ~ species, data = penguins)
+summary(aov_model1)
+```
+
+### Let'S get someone to explain what this means
+
+```{r}
+report(aov_model1)
+```
+
+
+### But wait, is there a Bayesian alternative?
+
+Sure there is with the `BFpack()` package. Just put it on top of the `aov()` object. Easy.
+
+```{r}
+BF(aov_model1)
+```
+
+
+## `anova_test()` in `rstatix` package
+
+```{r}
+aov_model2 <- anova_test(body_mass_g ~ species, data = penguins)
+aov_model2
+```
+
+
+## `TukeyHSD()` in base R (`stats`)
+
+
+```{r}
+TukeyHSD(aov_model1)
+```
+
+
+## `tukey_hsd()` in `rstatix` package
+
+```{r}
+tukey_hsd(aov_model1)
+```
+
+
+## Bayesian ANOVA with `bain` package
+
+Examples see [introduction to bain](https://cran.r-project.org/web/packages/bain/vignettes/Introduction_to_bain.html).
+
+```{r}
+# execute an analysis of variance using lm() which, due to the -1, returns
+# estimates of the means per group
+bain_aov <- lm(body_mass_g ~ species-1, penguins)
+# take a look at the estimated means and their names
+coef(bain_aov)
+# set a seed value
+set.seed(100)
+# test hypotheses with bain
+bain_model <- bain(bain_aov, "speciesAdelie=speciesChinstrap=speciesGentoo; 
+                              speciesAdelie=speciesChinstrap<speciesGentoo; 
+                              speciesAdelie<speciesChinstrap<speciesGentoo")
+# display the results
+bain_model
+# obtain the contrasts between the hypotheses
+bain_model$BFmatrix
+
+# obtain the descriptives table
+summary(bain_model, ci = 0.95)
+```
+
+# Plot One-Way ANOVA
+
+## Boxplot
+
+```{r}
+ggplot(penguins, aes(x=species, y=body_mass_g)) +
+  geom_boxplot() +
+  theme_light() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+```
+
+
+In boxplots we don't really see the distribution of the data. It might be bimodel without us knowing.
+
+
+## Violin plot
+
+```{r}
+ggplot(penguins, aes(x=species, y=body_mass_g)) +
+  geom_violin() +
+  theme_light() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+```
+
+### Let's add mean and CI for mean
+
+```{r}
+ggplot(penguins, aes(x=species, y=body_mass_g)) +
+  geom_violin() +
+  stat_summary(fun.data = "mean_cl_boot", color = "red", linewidth = 2, size = 1) +
+  theme_light() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+```
+
+### Let's add some color
+
+```{r}
+ggplot(penguins, aes(x=species, y=body_mass_g, fill = species, color = species)) +
+  geom_violin(alpha = .6, size = 2) +
+  stat_summary(fun.data = "mean_cl_boot", color = "red", linewidth = 2, size = 1) +
+  scale_color_viridis_d() +
+  scale_fill_viridis_d() +
+  theme_light() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        legend.position = "none")
+```
+
+### Let's change the axis titles
+
+```{r}
+ggplot(penguins, aes(x=species, y=body_mass_g, fill = species, color = species)) +
+  geom_violin(alpha = .6, size = 2) +
+  stat_summary(fun.data = "mean_cl_boot", color = "red", linewidth = 2, size = 1) +
+  xlab("") +
+  ylab("Chonkyness in g") +
+  scale_color_viridis_d() +
+  scale_fill_viridis_d() +
+  theme_light() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        legend.position = "none")
+```
+
+
+# Plot Two-Way ANOVA
+
+```{r}
+# here I'm just filtering away NAs
+penguins_noNA <- penguins |>
+    dplyr::filter(!is.na(sex))
+
+
+ggplot(penguins_noNA, aes(x=species, y=body_mass_g, fill = sex, color = sex)) +
+  geom_violin(alpha = .6, size = 2) +
+  stat_summary(fun.data = "mean_cl_boot", 
+               color = "red", linewidth = 2, size = 1, 
+               position = position_dodge(width = .9)) +
+  xlab("") +
+  ylab("Chonkyness in g") +
+  scale_color_viridis_d() +
+  scale_fill_viridis_d() +
+  theme_light() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+```
+
+# Conclusion
+
+Gentoo penguins are significantly chonkier than Adelie and Chinstrap penguins.    
+  
+![](https://preview.redd.it/y4d54thu9ju01.jpg?auto=webp&s=34a0dcee8a26efc80a692202448adcaf1e45b04f).
