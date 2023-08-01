@@ -168,6 +168,15 @@ TukeyHSD(aov_model1)
 tukey_hsd(aov_model1)
 ```
 
+## repeated mesures
+
+```{r}
+aov_model3 <- anova_test(body_mass_g ~ species, 
+                         data = penguins,
+                         within = year)
+summary(aov_model3)
+```
+
 
 ## Bayesian ANOVA with `bain` package
 
@@ -196,7 +205,7 @@ summary(bain_model, ci = 0.95)
 
 # Plot One-Way ANOVA
 
-## Boxplot
+## Boxplot 
 
 ```{r}
 ggplot(penguins, aes(x=species, y=body_mass_g)) +
