@@ -1,0 +1,67 @@
+---
+title: "Data wrangling"
+subtitle: ""
+author:
+  - name: "Jürgen Schneider"
+    email: "ju.schneider@dipf.de"
+    affiliation: "DIPF"
+    correspondence: true
+date: "`r Sys.Date()`" # inserts the date of compiling
+editor: source
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false # true will prevent embed-resources
+format: 
+  html:
+    theme: cerulean
+    fontsize: 0.85em
+    toc: true
+    toc-location: left
+    toc-depth: 4
+    embed-resources: true # will make standalone html file
+    code-fold: true
+    code-tools: true
+    code-link: true
+editor_options: 
+  chunk_output_type: console
+---
+
+# loading packages
+
+```{r}
+library(tidyverse)
+library(lme4)
+```
+
+
+1. lme4 installieren
+2. sleepstudy datensatz anschauen
+3. pivot_wider
+4. treatment variable einfügen
+5. pivot_longer
+
+5a. Alternative zu wider - longer, um treatment var einzufügen
+6. 2 Datensätze zusammenfügen mit full_join()
+
+# R Version
+
+```{r}
+sessionInfo()
+
+indiv_level <- lme4::sleepstudy
+
+indiv_level <- pivot_wider(lme4::sleepstudy, 
+                           names_from = "Days", 
+                           values_from = "Reaction", 
+                           names_prefix = "Reaction_"
+                          )
+
+
+teacher_level <- data.frame(Subject = unique(lme4::sleepstudy$Subject),
+                            motivation = rnorm(18, 0, 1))
+
+full_data <- full_join(teacher_level, indiv_level, by="Subject")
+
+```
