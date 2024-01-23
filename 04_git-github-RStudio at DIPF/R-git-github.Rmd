@@ -32,48 +32,25 @@ git is basically doing the versioning
 on your local (or in our case remote) computer and communicates the changes to  
 github (which is the _online_ repository) if we tell it to do so.
 
-## 1. Installation
+## 1. Installation (no admin rights needed)
 
 * Go to [git-scm.com/download/win](https://git-scm.com/download/win)
-* Click on the version "64-bit Git for Windows Portable", this should start the download of an exe-file
-* Execute the exe-file (should be called "PortableGit ... .exe") and save to a local folder (e.g. "Downloads")
-* Now there should be a folder "PortableGit" in you selected location
+* Click on the version "64-bit Git for Windows Setup", this should start the download of an exe-file
+* Execute the exe-file (should be called "Git ... .exe")
+* Click "Next" on all upcoming configurations, using the preselected options
+* Click "Install"
 
-## 2. make git accessible to RStudio  {.tabset}
+## 2. Check if RStudio can access git
 
-RStudio is running on a remote desktop (computer), so RStudio needs to have 
-access to git from this computer. To my knowledge, there are two ways of doing 
-this - both are somewhat nasty in my opinion.
- 
-### option 1: refer to your (or the public) network drive
-
-* Copy the folder "PortableGit" to your network drive or the public network drive
+* Start RStudio. If RStudio is already running, close and open it again.
 * In RStudio got to the menu "Tools" > "Global Options..."
 * Go to "Git/SVN" (see picture below)
-* Click "Browse..." for the Git executable
-* Go to the "PortableGit" folder on your (or the public) network drive
-* Select the file "git.exe" in the folder "PortableGit\bin" (subfolder "bin")
+* Is there already something in the "Git executable" field (e.g. "C:/Users/...")? 
+  - **Yes**: Good. Rejoice. The Git god favoreth thee. 
+  - **No**: Click "Browse..." and search for git.exe. Usually it hides in the folder `C:/Users/[YOUR NAME]/AppData/Local/Programs/Git/bin/git.exe` (you might need to display hidden files)
 * Click "Open" and "OK"
 
 ![](../www/access1.jpg)
-
-### option 2: refer to the remote desktop
-
-You can also copy the folder "PortableGit" to the remote desktop and make 
-RStudio (which runs on the same remote desktop) access git there.
-
-* In RStudio click on the blue gear symbol in the right-bottom pane (see picture below)
-* This will open the windows explorer (folder) from the remote desktop. You can now copy the the folder "PortableGit" from your computer to the remote desktop. Choose any folder on the remote desktop that makes sense to you. In the example chose "Downloads".
-* In RStudio got to the menu "Tools" > "Global Options..."
-* Go to "Git/SVN" (see second picture below)
-* Click "Browse..." for the Git executable
-* Go to the "PortableGit" folder on the remote desktop
-* Select the file "git.exe" in the folder "PortableGit\bin" (subfolder "bin")
-* Click "Open" and "OK"
-
-![](../www/remote.jpg)  
-  
-![](../www/access2.jpg)
 
 ## 3. let git know who you are
 
@@ -101,7 +78,7 @@ Replace you@example.com with the email you use at github.com. So for example:
 # `r fa("shield-halved")` SSH key
 
 Setting up an SSH connection makes communication between RStudio and Github 
-more secure.
+more secure. If you think this is unnecessary, just skip it and go on to "PAT".
 
 __Create SSH key in RStudio:__  
 
@@ -145,12 +122,12 @@ github.
 * Click your account icon on the top right corner (see first picture below)
 * Select "Settings"
 * Go to "Developer settings" (at the bottom right)
-* Go to "Personal access tokens"
-* Click on "Generate new token"
+* Go to "Personal access tokens" and click "Tokens (classic)"
+* Click on "Generate new token (classic)"
 * Provide your github password
 * Enter a description of what the token is for (e.g. which computer) in the "Note" field. (can be chosen freely, e.g. "DIPF remote desktop")
 * Set "Expiration" to "No expiration" (see second picture below)
-* Check the box "repo" 
+* Check the box "repo", "workflow", "write:packages" and "delete:packages"
 * Click "Generate token"
 * Copy the PAT that was created. It looks somewhat like this `ghp_Xki6jGtohH3xFD2SF1O3KQSXeCs93I3Ql5DL`
 * Save the PAT for a short time, you will need it later. You can't come back and recreate it!
