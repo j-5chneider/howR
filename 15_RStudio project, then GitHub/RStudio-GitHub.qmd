@@ -1,0 +1,148 @@
+---
+title: "How to RStudio project first and then GitHub"
+subtitle: ""
+author:
+  - name: "Jürgen Schneider"
+    email: "ju.schneider@dipf.de"
+    affiliation: "DIPF"
+    correspondence: true
+date: "`r Sys.Date()`" # inserts the date of compiling
+editor: source
+execute:
+  eval: false
+  echo: true
+  warning: false
+  message: false
+  cache: false # true will prevent embed-resources
+format: 
+  html:
+    theme: ceruleanc
+    number-sections: true
+    fontsize: 0.85em
+    toc: true
+    toc-location: left
+    toc-depth: 3
+    embed-resources: true # will make standalone html file
+    # code-fold: show
+    # code-tools: true
+    code-link: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| echo: false
+#| eval: true
+
+library(fontawesome)
+```
+
+\
+
+::: {style="background: #e8e9eb; border-radius: 10px; padding: 10px"}
+**This is a guide** on how to connect RStudio with Git with GitHub, in case the RStudio project existed first.  
+Our goal is to:  
+`r fa("registered", fill="#383e42", width="50px", margin_right="10px")` 
+`r fa("left-right", fill="#383e42", width="50px", margin_right="10px")` 
+`r fa("git-alt", fill="#383e42", width="50px", margin_right="10px")` 
+`r fa("left-right", fill="#383e42", width="50px", margin_right="10px")` 
+`r fa("github", fill="#383e42", width="50px")`
+:::
+
+:::{.aside}
+Inspired by and copied a lot from [Aaron Peikert's "Repro workshop"](https://aaronpeikert.github.io/repro-workshop/self-paced/).
+:::
+
+\
+\
+
+
+
+# Create an RStudio project `r fa("registered", fill="#383e42")`
+**(if you haven't already)**
+
+* If you can, check the boxes for "Create a git repository" and "Use renv with this project"  
+* If you can't or you already created the RStudio project: No matter, It'll work anyway.
+![](../www/create-git-renv.jpg)
+
+\
+\
+
+# Connect to Git `r fa("registered", fill="#383e42", margin_right="10px")` `r fa("left-right", fill="#383e42", margin_right="10px")` `r fa("git-alt", fill="#383e42", margin_right="10px")`
+
+You haven't **installed** [**Git**](https://git-scm.com/downloads) on your computer? Now is a good time. You don't need admin rights to do this.
+
+Now we'll tell git who we are.  
+Do this once for *each project*.  
+
+## `usethis` package
+
+The `usethis` package will help us a lot. Install it:
+
+```{r}
+install.packages("usethis")
+```
+
+## Let Git know who you are
+
+
+```{r}
+usethis::use_git_config(
+  user.name = "Jane Doe", # <-- change to your name
+  user.email = "jane@example.org", # <-- and your email
+  init.defaultBranch = "main") # <-- not necessary but kinder than 'master'
+```
+\
+\
+
+# Connect to GitHub `r fa("registered", fill="#383e42", margin_right="10px")` `r fa("left-right", fill="#383e42", margin_right="10px")` `r fa("git-alt", fill="#383e42", margin_right="10px")` `r fa("github", fill="#383e42")`
+
+
+**Do you have a GitHub account?**
+
+* **Yes**: Well done. Go to the first step
+* **No**: Now would be a good time to make an account on [GitHub](https://github.com/)
+
+  
+## Verify that it is you
+
+Not just anyone should be able to edit your repository, just you. So obviously you'll need to identify to GitHub. This is usually done by creating a *personal access token (PAT)*.  
+  
+### Create GitHub PAT
+*You have used a PAT with RStudio on this machine before?*  
+Then you probably don't need to do this step. Jump to the last step "Create GitHub repo".
+
+```{r}
+usethis::create_github_token(description = "Token for project ...") # <-- Fill in a name of your token
+```
+
+* Log into GitHub
+* Set `expiration date` to `No expiration` (or a certain time frame if that's too insecure for you or there are more people using RStudio on this machine)
+* Additionally check `write:packages`
+* Create PAT
+* Copy PAT and paste it somewhere for later use. *You cannot look it up in GitHub!*
+
+### Now set this PAT in your RStudio
+to make GitHub know: It is you who is using RStudio on this machine.
+
+We'll need the package `gitcreds`. Install it:
+
+```{r}
+install.packages("gitcreds")
+```
+
+And now set the PAT, to identify yourself.
+
+```{r}
+gitcreds::gitcreds_set() # <-- Token must *not* go into brackets, paste when asked in popup
+```
+\
+
+## Create GitHub repo
+
+In this final step, you'll let RStudio create the GitHub repo for you.
+
+```{r}
+usethis::use_github()
+```
+
