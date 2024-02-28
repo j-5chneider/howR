@@ -365,18 +365,27 @@ FYI: In diesem Fall muss die neu erstellte Skalenvariable nicht zwangsläufig de
 
 ## Reliabilitäten nicht berechnet
 
-Installieren Sie das package `{ufs}`.
+Installieren Sie das package `{ufs}` explizit **mit dessen Abhängigkeiten**.
 
 ```{r}
-install.packages("ufs")
+# reguläre Installation
+install.packages("ufs", dependencies = TRUE)
+
+# Wenn Sie renv benutzen
+renv::install("ufs", dependencies = "all")
 ```
 
-Installieren Sie das package `{GGally}`.
+Installieren Sie das package `{GGally}` explizit **mit dessen Abhängigkeiten**..
 
 ```{r}
-install.packages("GGally")
+# reguläre Installation
+install.packages("GGally", dependencies = TRUE)
+
+# Wenn Sie renv benutzen
+renv::install("GGally", dependencies = "all")
 ```
-\
+
+
   
 ## Viele Warnings angezeigt
 
@@ -394,6 +403,34 @@ knitr::opts_chunk$set(
   echo = TRUE  # show R code
 )
 ```
+\
+
+## Der Itemstamm einer Skala wird nicht angezeigt
+
+Definieren Sie das Argument `stem =` in der Funktion `aggregate_and_document_scale`. Ich habe hier doppelte Anführungszeichen (" ") innerhalb der einfachen Anführungszeichen (' ') genutzt, um diese dann auch im Codebook zu sehen.
+
+```{r}
+codebook_data$selbstwirksamkeit <- codebook_data %>% 
+  dplyr::select(sef_1, sef_2, sef_3) %>%
+  aggregate_and_document_scale(stem = '"The following statements may more or less relate to you. Please 
+                               indicate for each statement to what extent it applies to you personally."')
+```
+
+![](www/scale_label1.jpg)
+
+\
+
+## Mein Skalenname soll ausgeschrieben sein (ggf. mit Leerzeichen)
+
+Benennen Sie die Variable des `codebook_data` Objekts anhand von backticks. Diese kann z.B. auch Leerzeichen enthalten.
+
+```{r}
+codebook_data$`Self Efficacy` <- codebook_data %>%
+  dplyr::select(sef_1, sef_2, sef_3) %>%
+  aggregate_and_document_scale()
+```
+![](www/scale_label2.jpg)
+
 \
 
 ## Mittelwerte sind sehr klein/groß

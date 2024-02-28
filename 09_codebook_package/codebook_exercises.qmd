@@ -365,25 +365,26 @@ FYI: In diesem Fall muss die neu erstellte Skalenvariable nicht zwangsläufig de
 
 ## Reliabilitäten nicht berechnet
 
-Installieren Sie das package `{ufs}`.
+Installieren Sie das package `{ufs}` explizit **mit dessen Abhängigkeiten**.
 
 ```{r}
-install.packages("ufs")
+# reguläre Installation
+install.packages("ufs", dependencies = TRUE)
+
+# Wenn Sie renv benutzen
+renv::install("ufs", dependencies = "all")
 ```
 
-Installieren Sie das package `{GGally}`.
+Installieren Sie das package `{GGally}` explizit **mit dessen Abhängigkeiten**..
 
 ```{r}
-install.packages("GGally")
+# reguläre Installation
+install.packages("GGally", dependencies = TRUE)
+
+# Wenn Sie renv benutzen
+renv::install("GGally", dependencies = "all")
 ```
 
-\
-
-Hilft alles nichts? Installieren Sie die `{codebook}` Version von [GitHub](https://github.com/rubenarslan/codebook).
-```{r}
-install.packages("remotes")
-remotes::install_github("rubenarslan/codebook")
-```
 
   
 ## Viele Warnings angezeigt
