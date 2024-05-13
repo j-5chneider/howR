@@ -83,15 +83,30 @@ The `usethis` package will help us a lot. Install it:
 install.packages("usethis")
 ```
 
-## Let Git know who you are
+## Let Git know who you are 
 
+::: {.panel-tabset}
 
+### Via `usethis`
 ```{r}
 usethis::use_git_config(
   user.name = "Jane Doe", # <-- change to your name
   user.email = "jane@example.org", # <-- and your email
   init.defaultBranch = "main") # <-- not necessary but kinder than 'master'
 ```
+
+### Alternative via terminal
+
+Click on the `Terminal` tab (right next to the `Console` tab).  
+Give your user name and email.
+
+```{r}
+git config user.name "Mona Lisa"
+git config user.email "mona@lisa.org"
+```
+
+:::
+
 \
 \
 
