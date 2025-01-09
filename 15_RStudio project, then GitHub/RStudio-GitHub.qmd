@@ -100,12 +100,21 @@ usethis::use_git_config(
 Click on the `Terminal` tab (right next to the `Console` tab).  
 Give your user name and email.
 
-```{r}
+```
 git config user.name "Mona Lisa"
 git config user.email "mona@lisa.org"
 ```
 
 :::
+
+## Initiate Git
+
+If you haven't checked the box "Create a git repository", when creating the new project, run this code to start using Git.
+
+```{r}
+usethis::use_git()
+```
+
 
 \
 \
@@ -140,6 +149,24 @@ usethis::create_github_token(description = "Token for project ...") # <-- Fill i
 ### Now set this PAT in your RStudio
 to make GitHub know: It is you who is using RStudio on this machine.
 
+::: {.panel-tabset}
+### Via `credentials`
+
+I think the `credentials` package might already be installed, if not, run this:
+
+```{r}
+install.packages("credentials")
+```
+
+And now set the PAT, to identify yourself.
+
+```{r}
+credentials::set_github_pat() # <-- Token must *not* go into brackets, paste when asked in popup
+```
+
+
+### Via `gitcreds`
+
 We'll need the package `gitcreds`. Install it:
 
 ```{r}
@@ -151,6 +178,8 @@ And now set the PAT, to identify yourself.
 ```{r}
 gitcreds::gitcreds_set() # <-- Token must *not* go into brackets, paste when asked in popup
 ```
+:::
+
 \
 
 ## Create GitHub repo
