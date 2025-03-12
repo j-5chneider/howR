@@ -70,7 +70,7 @@ Inspired by and copied a lot from [Aaron Peikert's "Repro workshop"](https://aar
 
 # Connect to Git `r fa("registered", fill="#383e42", margin_right="10px")` `r fa("left-right", fill="#383e42", margin_right="10px")` `r fa("git-alt", fill="#383e42", margin_right="10px")`
 
-You haven't **installed** [**Git**](https://git-scm.com/downloads) on your computer? Now is a good time. You don't need admin rights to do this.
+You haven't **installed** [**Git**](https://git-scm.com/downloads) on your computer? Now is a good time. You don't need admin rights to do this. Restart RStudio after installing git!
 
 Now we'll tell git who we are.  
 Do this once for *each project*.  
