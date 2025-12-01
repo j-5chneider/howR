@@ -1,0 +1,114 @@
+---
+title: "How to Quarto Book"
+subtitle: ""
+author:
+  - name: "Jürgen Schneider"
+    email: "ju.schneider@dipf.de"
+    affiliation: "DIPF"
+    correspondence: true
+date: "`r Sys.Date()`" # inserts the date of compiling
+editor: source
+execute:
+  eval: false
+  echo: true
+  warning: false
+  message: false
+  cache: false # true will prevent embed-resources
+format: 
+  html:
+    theme: ceruleanc
+    number-sections: true
+    fontsize: 0.85em
+    toc: true
+    toc-location: left
+    toc-depth: 3
+    embed-resources: true # will make standalone html file
+    # code-fold: show
+    # code-tools: true
+    code-link: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| echo: false
+#| eval: true
+
+library(fontawesome)
+```
+
+# Create new project > "Quarto book"
+- check "use renv with this project"
+- check "create a git repository"
+
+# Create pages
+Put file names in `_quarto.yml`
+
+# Put this into .gitignore
+/.quarto/  
+/_site/
+
+
+# Publish
+
+## Let Git know who you are
+
+::: {.panel-tabset}
+
+### Via `usethis`
+First time, connect to github:
+renv::install("usethis")
+
+```{r}
+usethis::use_git_config(
+  user.name = "Jane Doe", # <-- change to your name
+  user.email = "jane@example.org", # <-- and your email
+  init.defaultBranch = "main") # <-- not necessary but kinder than 'master'
+```
+
+### Alternative via terminal
+
+Click on the `Terminal` tab (right next to the `Console` tab).  
+Give your user name and email.
+
+```
+git config user.name "Mona Lisa"
+git config user.email "mona@lisa.org"
+```
+
+:::
+
+## Initiate Git
+
+```{r}
+usethis::use_git()
+```
+
+
+## Connect to GitHub
+Create GitHub Token and copy it.
+
+```{r}
+usethis::create_github_token(description = "Token for project ...") # <-- Fill in a name of your token
+```
+
+And now set the PAT, to identify yourself.
+```{r}
+credentials::set_github_pat() # <-- Token must *not* go into brackets, paste when asked in popup
+```
+
+## Create GitHub repo
+
+```{r}
+usethis::use_github()
+```
+
+
+
+## Publish as GitHub Pages
+
+Put this into the **terminal**:
+
+```{r}
+quarto publish gh-pages
+```
